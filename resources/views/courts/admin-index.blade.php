@@ -87,10 +87,17 @@
                                     <td class="py-3 px-4">
                                         <div class="flex items-center gap-3">
                                             <div class="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-700">
-                                                @if ($court->image_url)
-                                                    <img src="{{ $court->image_url }}" alt="Foto {{ $court->name }}" class="w-full h-full object-cover" loading="lazy">
+                                                @if ($court->image)
+                                                    <img
+                                                        src="{{ asset('storage/' . $court->image) }}"
+                                                        alt="Foto {{ $court->name }}"
+                                                        class="w-full h-full object-cover"
+                                                        loading="lazy"
+                                                    >
                                                 @else
-                                                    <div class="w-full h-full flex items-center justify-center text-2xs text-slate-500">Tanpa foto</div>
+                                                    <div class="w-full h-full flex items-center justify-center text-2xs text-slate-500">
+                                                        Tanpa foto
+                                                    </div>
                                                 @endif
                                             </div>
                                             <div class="min-w-0">
