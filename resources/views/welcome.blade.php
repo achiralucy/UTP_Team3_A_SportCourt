@@ -3,17 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SportCourt - Sistem Booking Lapangan Futsal & Badminton Modern</title>
+    <title>SportCourt - Sistem Booking Lapangan Futsal & Badminton</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
-    <!-- Navbar -->
+
     <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -53,7 +51,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="relative pt-16 pb-24 overflow-hidden">
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -80,7 +77,6 @@
                 </a>
             </div>
 
-            <!-- Demo Lecturer Helper Card -->
             <div class="mt-12 max-w-xl mx-auto bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl text-left">
                 <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
                     <span class="text-2xs font-extrabold uppercase tracking-wider text-emerald-400">Akun Pengujian Demo (Dosen / Penguji)</span>
@@ -102,7 +98,6 @@
         </div>
     </section>
 
-    <!-- Fitur Unggulan -->
     <section class="py-16 bg-slate-900/50 border-y border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -124,7 +119,6 @@
                     </p>
                 </div>
 
-                <!-- Fitur 2 -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-sm">
                     <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 border border-indigo-500/20">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,7 +131,6 @@
                     </p>
                 </div>
 
-                <!-- Fitur 3 -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-sm">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 border border-amber-500/20">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,24 +161,24 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach ($courts as $court)
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between">
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="px-2.5 py-0.5 text-2xs font-extrabold uppercase rounded {{ $court->category == 'futsal' ? 'bg-blue-500/20 text-blue-300' : 'bg-emerald-500/20 text-emerald-300' }}">
-                                    {{ $court->category }}
-                                </span>
-                                <span class="text-xs font-bold text-emerald-400">
-                                    Rp {{ number_format($court->price_per_hour, 0, ',', '.') }}<span class="text-slate-500 font-normal">/jam</span>
-                                </span>
+                            <x-court-cover :court="$court" height="h-36">
+                                <div class="h-full p-4 flex items-start justify-between">
+                                    <x-court-badges :court="$court" class="backdrop-blur-sm" />
+                                    <span class="px-2.5 py-0.5 rounded-full text-2xs font-bold bg-slate-950/70 text-emerald-400 backdrop-blur-sm">
+                                        Rp {{ number_format($court->price_per_hour, 0, ',', '.') }}<span class="text-slate-400 font-normal">/jam</span>
+                                    </span>
+                                </div>
+                            </x-court-cover>
+                            <div class="p-5 pb-0">
+                                <h4 class="text-lg font-bold text-white mb-2">{{ $court->name }}</h4>
+                                @if ($court->facilities)
+                                    <p class="text-xs text-slate-400 line-clamp-2 mb-3">{{ $court->facilities }}</p>
+                                @endif
                             </div>
-                            <h4 class="text-lg font-bold text-white mb-2">{{ $court->name }}</h4>
-                            @if ($court->facilities)
-                                <p class="text-xs text-slate-400 line-clamp-2 mb-3">
-                                    {{ $court->facilities }}
-                                </p>
-                            @endif
                         </div>
-                        <div class="pt-4 border-t border-slate-800">
+                        <div class="p-5 pt-4">
                             <a href="{{ route('courts.show', $court) }}" class="block text-center py-2 bg-slate-800 hover:bg-slate-750 text-white rounded-xl text-xs font-semibold transition">
                                 Cek Jadwal & Detail
                             </a>

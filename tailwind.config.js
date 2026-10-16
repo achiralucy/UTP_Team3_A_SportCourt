@@ -14,6 +14,16 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                '2xs': ['0.6875rem', { lineHeight: '1rem' }],
+            },
+            colors: {
+                slate: {
+                    650: '#3b4a60',
+                    750: '#273449',
+                    850: '#162033',
+                },
+            },
         },
     },
 

@@ -2,140 +2,119 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourtRequest;
 use App\Models\Court;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CourtController extends Controller
 {
-    /**
-     * Tampilkan daftar seluruh lapangan.
-     */
     public function index(Request $request)
     {
-        $query = Court::query();
+        $sorts = [
+            'latest' => ['created_at', 'desc'],
+            'name' => ['name', 'asc'],
+            'price_low' => ['price_per_hour', 'asc'],
+            'price_high' => ['price_per_hour', 'desc'],
+        ];
 
-        if ($request->filled('category') && $request->category !== 'all') {
-            $query->where('category', $request->category);
-        }
+        [$column, $direction] = $sorts[$request->input('sort')] ?? $sorts['latest'];
 
-        if ($request->filled('status') && $request->status !== 'all') {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('facilities', 'like', "%{$search}%");
-        }
-
-        $courts = $query->latest()->paginate(9)->withQueryString();
+        $courts = Court::query()
+            ->search($request->input('search'))
+            ->category($request->input('category'))
+            ->status($request->input('status'))
+            ->orderBy($column, $direction)
+            ->paginate(9)
+            ->withQueryString();
 
         if (Auth::check() && Auth::user()->isAdmin()) {
-            return view('courts.admin-index', compact('courts'));
+            $stats = [
+                'total' => Court::count(),
+                'available' => Court::where('status', 'available')->count(),
+                'maintenance' => Court::where('status', 'maintenance')->count(),
+                'futsal' => Court::where('category', 'futsal')->count(),
+                'badminton' => Court::where('category', 'badminton')->count(),
+            ];
+
+            return view('courts.admin-index', compact('courts', 'stats'));
         }
 
         return view('courts.index', compact('courts'));
     }
 
-    /**
-     * Form tambah lapangan baru (Admin).
-     */
     public function create()
     {
         return view('courts.create');
     }
 
-    /**
-     * Simpan lapangan baru ke database (Admin).
-     */
-    public function store(Request $request)
+    public function store(CourtRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'category' => 'required|in:futsal,badminton',
-            'price_per_hour' => 'required|integer|min:10000',
-            'status' => 'required|in:available,maintenance',
-            'facilities' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ], [
-            'name.required' => 'Nama lapangan wajib diisi.',
-            'category.required' => 'Kategori olahraga wajib dipilih.',
-            'category.in' => 'Kategori harus futsal atau badminton.',
-            'price_per_hour.required' => 'Harga sewa per jam wajib diisi.',
-            'price_per_hour.min' => 'Harga sewa minimal Rp 10.000.',
-            'status.required' => 'Status operasional lapangan wajib dipilih.',
-        ]);
+        $data = $request->safe()->except(['image', 'remove_image']);
 
-        Court::create($validated);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('courts', 'public');
+        }
 
-        return redirect()->route('courts.index')->with('success', 'Data lapangan baru berhasil ditambahkan!');
+        $court = Court::create($data);
+
+        return redirect()
+            ->route('courts.show', $court)
+            ->with('success', "Lapangan {$court->name} berhasil ditambahkan.");
     }
 
-    /**
-     * Tampilkan detail lapangan.
-     */
     public function show(Court $court)
     {
         $court->load(['bookings' => function ($query) {
             $query->where('booking_date', '>=', now()->toDateString())
-                  ->whereIn('status', ['approved', 'pending'])
-                  ->orderBy('booking_date')
-                  ->orderBy('start_time');
+                ->whereIn('status', ['approved', 'pending'])
+                ->orderBy('booking_date')
+                ->orderBy('start_time');
         }]);
 
         return view('courts.show', compact('court'));
     }
 
-    /**
-     * Form edit data lapangan (Admin).
-     */
     public function edit(Court $court)
     {
         return view('courts.edit', compact('court'));
     }
 
-    /**
-     * Perbarui data lapangan (Admin).
-     */
-    public function update(Request $request, Court $court)
+    public function update(CourtRequest $request, Court $court)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:100',
-            'category' => 'required|in:futsal,badminton',
-            'price_per_hour' => 'required|integer|min:10000',
-            'status' => 'required|in:available,maintenance',
-            'facilities' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
-        ], [
-            'name.required' => 'Nama lapangan wajib diisi.',
-            'category.required' => 'Kategori olahraga wajib dipilih.',
-            'price_per_hour.required' => 'Harga sewa per jam wajib diisi.',
-            'status.required' => 'Status operasional lapangan wajib dipilih.',
-        ]);
+        $data = $request->safe()->except(['image', 'remove_image']);
 
-        $court->update($validated);
-
-        return redirect()->route('courts.index')->with('success', 'Data lapangan berhasil diperbarui!');
-    }
-
-    /**
-     * Hapus data lapangan (Admin).
-     */
-    public function destroy(Court $court)
-    {
-        // Cek jika lapangan masih memiliki jadwal booking aktif
-        $hasActiveBookings = $court->bookings()
-            ->whereIn('status', ['pending', 'approved'])
-            ->where('booking_date', '>=', now()->toDateString())
-            ->exists();
-
-        if ($hasActiveBookings) {
-            return redirect()->route('courts.index')->with('error', 'Tidak dapat menghapus lapangan: Masih ada jadwal booking aktif di masa mendatang!');
+        if ($request->hasFile('image')) {
+            $court->deleteImage();
+            $data['image'] = $request->file('image')->store('courts', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            $court->deleteImage();
+            $data['image'] = null;
         }
 
+        $court->update($data);
+
+        $message = "Data lapangan {$court->name} berhasil diperbarui.";
+
+        if ($court->status === 'maintenance' && $court->hasActiveBookings()) {
+            $message .= ' Perhatian: masih ada booking aktif pada lapangan ini yang perlu ditinjau.';
+        }
+
+        return redirect()->route('courts.index')->with('success', $message);
+    }
+
+    public function destroy(Court $court)
+    {
+        if ($court->hasActiveBookings()) {
+            return redirect()
+                ->route('courts.index')
+                ->with('error', 'Lapangan tidak dapat dihapus karena masih memiliki booking aktif. Tolak atau batalkan booking tersebut terlebih dahulu.');
+        }
+
+        $name = $court->name;
+        $court->deleteImage();
         $court->delete();
 
-        return redirect()->route('courts.index')->with('success', 'Data lapangan berhasil dihapus!');
+        return redirect()->route('courts.index')->with('success', "Lapangan {$name} berhasil dihapus.");
     }
 }
