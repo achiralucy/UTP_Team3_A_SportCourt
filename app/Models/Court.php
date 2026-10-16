@@ -15,6 +15,8 @@ class Court extends Model
         'category',
         'price_per_hour',
         'status',
+        'facilities',
+        'image',
         'description',
     ];
 

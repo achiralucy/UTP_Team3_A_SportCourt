@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum('category', ['futsal', 'badminton']);
             $table->integer('price_per_hour');
             $table->enum('status', ['available', 'maintenance'])->default('available');
+            $table->string('facilities')->nullable();
+            $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
