@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between no-print">
             <div>
                 <h2 class="font-bold text-2xl text-white tracking-tight">
                     Tiket Reservasi Lapangan
@@ -10,8 +10,11 @@
                 </p>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="window.print()" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 bg-slate-800 rounded-xl border border-slate-700 transition">
-                    🖨️ Cetak Tiket
+                <button onclick="window.print()" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 bg-slate-800 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                    </svg>
+                    Cetak Tiket
                 </button>
                 <a href="{{ route('bookings.index') }}" class="text-xs font-semibold text-slate-400 hover:text-white px-3 py-2 bg-slate-800 rounded-xl border border-slate-700 transition">
                     &larr; Riwayat Booking
@@ -20,13 +23,11 @@
         </div>
     </x-slot>
 
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- E-Ticket Card -->
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl relative">
-            <!-- Top Banner -->
+    <div x-data="{ cancelModalOpen: false }" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="printableTicket" class="bg-slate-800 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl relative">
             <div class="bg-gradient-to-r from-emerald-600 to-teal-500 p-6 text-slate-950 flex items-center justify-between">
                 <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-950/70">SportCourt E-Ticket</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-950/70">SportCourt Official E-Ticket</span>
                     <h3 class="text-2xl font-black tracking-tight text-white mt-0.5">{{ $booking->court->name }}</h3>
                     <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-2xs font-bold uppercase bg-slate-950/20 text-white">
                         Olahraga {{ $booking->court->category }}
@@ -38,16 +39,13 @@
                 </div>
             </div>
 
-            <!-- Perforated Cut Visual -->
-            <div class="relative bg-slate-800 py-2">
+            <div class="relative bg-slate-800 py-2 no-print">
                 <div class="border-b-2 border-dashed border-slate-700"></div>
                 <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-900 rounded-full"></div>
                 <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-900 rounded-full"></div>
             </div>
 
-            <!-- Ticket Details -->
             <div class="p-6 sm:p-8 space-y-6">
-                <!-- Status Badge -->
                 <div class="flex items-center justify-between p-3.5 bg-slate-900/80 rounded-2xl border border-slate-750">
                     <span class="text-xs text-slate-400 font-medium">Status Pemesanan:</span>
                     <div>
@@ -71,7 +69,6 @@
                     </div>
                 </div>
 
-                <!-- Grid Info -->
                 <div class="grid grid-cols-2 gap-4 text-xs">
                     <div>
                         <span class="text-slate-500 uppercase tracking-wider text-2xs">Tanggal Main</span>
@@ -79,43 +76,56 @@
                     </div>
 
                     <div>
-                        <span class="text-slate-500 uppercase tracking-wider text-2xs">Jam Main</span>
+                        <span class="text-slate-500 uppercase tracking-wider text-2xs">Jam & Durasi</span>
                         <div class="text-sm font-bold font-mono text-emerald-400 mt-1">
                             {{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB
                         </div>
+                        <div class="text-slate-400 text-2xs mt-0.5 font-medium">Durasi: {{ $durationHours }} Jam</div>
                     </div>
 
                     <div>
                         <span class="text-slate-500 uppercase tracking-wider text-2xs">Nama Pemesan</span>
                         <div class="text-sm font-semibold text-slate-200 mt-1">{{ $booking->user->name }}</div>
-                        <div class="text-slate-400 text-2xs mt-0.5">{{ $booking->user->email }}</div>
+                        <div class="text-slate-400 text-2xs mt-0.5">{{ $booking->user->email }} • {{ $booking->user->phone ?? '-' }}</div>
                     </div>
 
                     <div>
                         <span class="text-slate-500 uppercase tracking-wider text-2xs">Tim / Komunitas</span>
                         @if ($booking->team)
                             <div class="text-sm font-bold text-indigo-400 mt-1">{{ $booking->team->name }}</div>
-                            <div class="text-slate-400 text-2xs mt-0.5">Kapten: {{ $booking->team->captain_name }}</div>
+                            <div class="text-slate-400 text-2xs mt-0.5">Kapten: {{ $booking->team->captain_name }} ({{ $booking->team->captain_phone }})</div>
                         @else
-                            <div class="text-sm text-slate-400 italic mt-1">Perorangan</div>
+                            <div class="text-sm text-slate-400 italic mt-1">Perorangan (Tanpa Tim)</div>
                         @endif
                     </div>
                 </div>
 
+                @if ($booking->court->facilities)
+                    <div class="pt-2">
+                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-400">Fasilitas Termasuk:</span>
+                        <div class="flex flex-wrap gap-1.5 mt-1.5">
+                            @foreach (explode(',', $booking->court->facilities) as $f)
+                                <span class="px-2 py-0.5 bg-slate-900 border border-slate-700/80 rounded-lg text-2xs text-slate-300">
+                                    ✓ {{ trim($f) }}
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
                 @if ($booking->admin_notes)
                     <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-700/80">
-                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-400">Pesan dari Pengelola SportCourt:</span>
-                        <p class="text-xs text-slate-300 mt-1 italic leading-relaxed">
+                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-400">Catatan & Riwayat:</span>
+                        <p class="text-xs text-slate-300 mt-1 italic leading-relaxed whitespace-pre-line">
                             "{{ $booking->admin_notes }}"
                         </p>
                     </div>
                 @endif
 
-                <!-- Total Harga -->
                 <div class="pt-4 border-t border-slate-700 flex items-center justify-between">
                     <div>
-                        <span class="text-2xs text-slate-400 uppercase">Tarif Sewa</span>
-                        <div class="text-xs text-slate-300">Rp {{ number_format($booking->court->price_per_hour, 0, ',', '.') }}/jam</div>
+                        <span class="text-2xs text-slate-400 uppercase">Rincian Tarif</span>
+                        <div class="text-xs text-slate-300 font-medium">Rp {{ number_format($booking->court->price_per_hour, 0, ',', '.') }}/jam &times; {{ $durationHours }} jam</div>
                     </div>
                     <div class="text-right">
                         <span class="text-2xs text-slate-400 uppercase">Total Tagihan</span>
@@ -123,8 +133,7 @@
                     </div>
                 </div>
 
-                <!-- Footer Action Buttons -->
-                <div class="pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
                     <a href="{{ route('bookings.index') }}" class="w-full sm:w-auto px-4 py-2 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-xl text-xs font-semibold text-center transition">
                         Kembali
                     </a>
@@ -134,17 +143,79 @@
                             <a href="{{ route('bookings.edit', $booking) }}" class="flex-1 sm:flex-none px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-semibold text-center transition">
                                 Ubah Jadwal
                             </a>
+                        @endif
 
-                            <form method="POST" action="{{ route('bookings.cancel', $booking) }}" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan booking ini?');">
-                                @csrf
-                                <button type="submit" class="w-full px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold transition">
-                                    Batalkan Booking
-                                </button>
-                            </form>
+                        @if (in_array($booking->status, ['pending', 'approved']) && !$isPast)
+                            <button type="button"
+                                    @click="cancelModalOpen = true"
+                                    class="w-full sm:w-auto px-4 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold transition">
+                                Batalkan Booking
+                            </button>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
+
+        <div x-show="cancelModalOpen"
+             x-cloak
+             class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+            <div @click.away="cancelModalOpen = false" class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <span class="text-rose-400">⚠️</span> Konfirmasi Pembatalan
+                    </h3>
+                    <button @click="cancelModalOpen = false" class="text-slate-400 hover:text-white text-sm">&times;</button>
+                </div>
+
+                <form action="{{ route('bookings.cancel', $booking) }}" method="POST" class="mt-4 space-y-4">
+                    @csrf
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Apakah Anda yakin ingin membatalkan booking tiket <strong>#SC-{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}</strong>? Slot waktu lapangan ini akan dibebaskan kembali.
+                    </p>
+
+                    <div>
+                        <label for="modalReason" class="block text-2xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                            Alasan Pembatalan (Opsional):
+                        </label>
+                        <textarea name="reason" id="modalReason" rows="2"
+                                  placeholder="Contoh: Ada keperluan mendadak, tim berhalangan..."
+                                  class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" @click="cancelModalOpen = false" class="px-4 py-2 bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-medium rounded-xl transition">
+                            Batal
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition">
+                            Ya, Batalkan Booking Ini
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <style>
+        @media print {
+            nav, header, .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            #printableTicket {
+                border: 2px solid #000 !important;
+                box-shadow: none !important;
+                background: white !important;
+                color: black !important;
+            }
+            #printableTicket * {
+                color: black !important;
+                background: transparent !important;
+                border-color: #ddd !important;
+            }
+        }
+    </style>
 </x-app-layout>
