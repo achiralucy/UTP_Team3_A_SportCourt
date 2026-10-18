@@ -10,7 +10,7 @@
                 </p>
             </div>
             <a href="{{ route('admin.bookings.index') }}" class="text-xs font-semibold text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-700 transition">
-                &larr; Kembali ke Daftar Booking
+                Kembali ke Daftar Booking
             </a>
         </div>
     </x-slot>
