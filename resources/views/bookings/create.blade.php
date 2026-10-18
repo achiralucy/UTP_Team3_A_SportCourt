@@ -310,14 +310,13 @@
                                     <div class="text-center text-3xs text-slate-400">
                                         Sisa batas waktu pembayaran: <span class="font-mono text-amber-300 font-bold" x-text="String(timerMin).padStart(2, '0') + ':' + String(timerSec).padStart(2, '0')"></span>
                                     </div>
-
                                     <div class="flex items-center gap-3 pt-2">
-                                        <button type="button" @click="paymentModalOpen = false" class="flex-1 py-2.5 min-h-[44px] bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-semibold rounded-xl transition text-center cursor-pointer">
+                                        <button type="button" @click="paymentModalOpen = false" class="flex-1 px-5 py-3 min-h-[48px] bg-slate-700 hover:bg-slate-650 text-slate-200 text-sm font-semibold rounded-xl transition text-center cursor-pointer">
                                             Batal
                                         </button>
                                         <button type="button"
                                                 @click="confirmPayAndSubmit()"
-                                                class="flex-2 py-2.5 min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition text-center flex items-center justify-center gap-2 cursor-pointer">
+                                                class="flex-[2] px-6 py-3 min-h-[48px] bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition text-center flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
                                             <span>✓</span> Bayar Sekarang & Pesan
                                         </button>
                                     </div>
@@ -475,12 +474,19 @@
                     return;
                 }
 
-                const todayStr = new Date().toISOString().slice(0, 10);
+                const todayStr = localDateString(new Date());
                 if (bookingDate === todayStr) {
                     const now = new Date();
                     const nowMinutes = now.getHours() * 60 + now.getMinutes();
                     if (startMinutes <= nowMinutes) {
-                        showWarning('Jam mulai sewa untuk hari ini tidak boleh lebih awal dari waktu sekarang.');
+                        const nowText = minutesToTime(nowMinutes);
+                        const nextStart = Math.max(Math.ceil((nowMinutes + 1) / 30) * 30, 6 * 60);
+
+                        if (nextStart > 22 * 60) {
+                            showWarning(`Sekarang pukul ${nowText}, sudah tidak ada slot yang bisa dipesan untuk hari ini. Silakan pilih tanggal besok atau setelahnya.`);
+                        } else {
+                            showWarning(`Jam ${startTime} sudah terlewat (sekarang pukul ${nowText}). Pilih jam mulai ${minutesToTime(nextStart)} atau lebih, atau ganti tanggal.`);
+                        }
                         return;
                     }
                 }
@@ -507,12 +513,56 @@
                 clientAlert.className = 'block p-3.5 rounded-xl text-xs font-semibold bg-rose-950/60 border border-rose-500/40 text-rose-300';
                 clientAlert.innerHTML = `⚠️ ${msg}`;
             }
+            const hasOldInput = @json(old('start_time') !== null || old('end_time') !== null);
+
+            function localDateString(date) {
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+                return `${y}-${m}-${d}`;
+            }
+
+            function minutesToTime(total) {
+                const h = String(Math.floor(total / 60)).padStart(2, '0');
+                const m = String(total % 60).padStart(2, '0');
+                return `${h}:${m}`;
+            }
+
+            function applyDefaultTimes() {
+                if (hasOldInput) {
+                    return;
+                }
+
+                const now = new Date();
+                if (dateInput.value !== localDateString(now)) {
+                    return;
+                }
+
+                const nowMinutes = now.getHours() * 60 + now.getMinutes();
+                const defaultStart = 19 * 60;
+                if (defaultStart > nowMinutes) {
+                    return;
+                }
+
+                const nextStart = Math.max(Math.ceil((nowMinutes + 1) / 30) * 30, 6 * 60);
+
+                if (nextStart > 22 * 60) {
+                    const tomorrow = new Date(now);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    dateInput.value = localDateString(tomorrow);
+                    return;
+                }
+
+                startTimeInput.value = minutesToTime(nextStart);
+                endTimeInput.value = minutesToTime(Math.min(nextStart + 60, 23 * 60));
+            }
 
             courtSelect.addEventListener('change', fetchBookedSlots);
             dateInput.addEventListener('change', fetchBookedSlots);
             startTimeInput.addEventListener('input', calculateAndValidate);
             endTimeInput.addEventListener('input', calculateAndValidate);
-
+           
+            applyDefaultTimes();
             if (courtSelect.value) {
                 fetchBookedSlots();
             } else {
