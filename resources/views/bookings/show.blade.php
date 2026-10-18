@@ -23,39 +23,7 @@
         </div>
     </x-slot>
 
-    <div x-data="{ 
-            cancelModalOpen: false, 
-            paymentModalOpen: false, 
-            paymentSimulated: false,
-            timerMin: 14,
-            timerSec: 59,
-            timerInterval: null,
-            startTimer() {
-                if (!this.timerInterval) {
-                    this.timerInterval = setInterval(() => {
-                        if (this.timerSec > 0) {
-                            this.timerSec--;
-                        } else if (this.timerMin > 0) {
-                            this.timerMin--;
-                            this.timerSec = 59;
-                        } else {
-                            clearInterval(this.timerInterval);
-                        }
-                    }, 1000);
-                }
-            }
-         }" 
-         class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <!-- Success Alert for Simulated Payment -->
-        <div x-show="paymentSimulated" x-cloak class="mb-4 p-4 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl flex items-center justify-between gap-3 text-emerald-300 shadow-lg">
-            <div class="flex items-center gap-2.5 text-xs font-bold">
-                <span class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center text-xs shrink-0">✓</span>
-                <span>Simulasi Berhasil: Tagihan sebesar Rp {{ number_format($booking->total_price, 0, ',', '.') }} telah terverifikasi via QRIS!</span>
-            </div>
-            <button @click="paymentSimulated = false" class="text-emerald-400 hover:text-white text-base leading-none px-2">&times;</button>
-        </div>
-
+    <div x-data="{ cancelModalOpen: false }" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="printableTicket" class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl relative">
             <div class="bg-gradient-to-r from-emerald-500 to-teal-400 p-6 text-slate-950 flex items-center justify-between">
                 <div>
@@ -104,31 +72,20 @@
                     </div>
 
                     <div class="pt-2.5 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <span class="text-xs text-slate-400 font-medium">Status Pembayaran & Tagihan:</span>
+                        <span class="text-xs text-slate-400 font-medium">Status Pembayaran Online:</span>
                         <div>
-                            <template x-if="paymentSimulated">
+                            @if (in_array($booking->status, ['pending', 'approved']))
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-flex items-center gap-1.5">
-                                    <span>✓ Lunas</span>
-                                    <span class="text-3xs text-emerald-400/80 font-normal">(Simulasi QRIS)</span>
+                                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span>Lunas (Terbayar Online di Muka)</span>
                                 </span>
-                            </template>
-                            <template x-if="!paymentSimulated">
-                                <div>
-                                    @if ($booking->status === 'approved')
-                                        <span class="px-3 py-1 text-xs font-bold rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
-                                            Menunggu Check-In & Pelunasan di Kasir
-                                        </span>
-                                    @elseif ($booking->status === 'pending')
-                                        <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                                            Menunggu Konfirmasi Jadwal
-                                        </span>
-                                    @elseif ($booking->status === 'rejected' || $booking->status === 'cancelled')
-                                        <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-500">
-                                            Tagihan Dibatalkan
-                                        </span>
-                                    @endif
-                                </div>
-                            </template>
+                            @else
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-500">
+                                    Tagihan Dibatalkan
+                                </span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -221,40 +178,21 @@
                     </div>
                 </div>
 
-                <!-- Catatan Kasir & Resepsionis Venue (Terbaca di Layar & Cetak Tiket) -->
-                <div class="p-3.5 bg-slate-900/60 rounded-xl border border-slate-750 text-2xs text-slate-300 space-y-1">
-                    <span class="font-bold uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                        </svg>
-                        Catatan Kasir & Resepsionis:
-                    </span>
-                    <p class="leading-relaxed">
-                        Tunjukkan E-Tiket ini kepada petugas kasir SportCourt Arena saat tiba di lokasi untuk verifikasi check-in dan pelunasan transaksi (Tunai, Debit EDC, atau QRIS) sebelum memasuki lapangan.
+                <!-- Bukti Pembayaran Online Lunas (Terbaca di Layar & Cetak Tiket) -->
+                <div class="p-4 bg-emerald-950/40 rounded-2xl border border-emerald-500/30 text-xs space-y-1.5">
+                    <div class="font-bold uppercase tracking-wider text-emerald-300 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            Pembayaran Online Terverifikasi
+                        </span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-black text-2xs tracking-wider">✓ LUNAS</span>
+                    </div>
+                    <p class="text-2xs text-slate-300 leading-relaxed">
+                        Total sewa sebesar <strong class="text-white font-semibold">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</strong> telah dibayar lunas melalui gateway online SportCourt saat reservasi diajukan. Tunjukkan e-tiket ini kepada petugas venue untuk scan barcode check-in sebelum kick-off.
                     </p>
                 </div>
-
-                <!-- Interactive Payment Action Box (No Print) -->
-                @if (in_array($booking->status, ['pending', 'approved']))
-                    <div class="p-4 bg-emerald-950/30 border border-emerald-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-                        <div class="space-y-0.5 text-center sm:text-left">
-                            <div class="text-xs font-bold text-white flex items-center justify-center sm:justify-start gap-1.5">
-                                <span class="text-emerald-400">💳</span> Pembayaran Online & Kasir
-                            </div>
-                            <p class="text-2xs text-slate-300">
-                                Selesaikan pembayaran instan melalui QRIS atau bayar langsung di kasir arena.
-                            </p>
-                        </div>
-                        <button type="button"
-                                @click="paymentModalOpen = true; startTimer()"
-                                class="w-full sm:w-auto px-4 py-2.5 min-h-[44px] bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center justify-center gap-1.5 shrink-0">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                            </svg>
-                            Buka QRIS & Petunjuk Bayar
-                        </button>
-                    </div>
-                @endif
 
                 <div class="pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
                     <a href="{{ route('bookings.index') }}" class="w-full sm:w-auto px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-xl text-xs font-semibold text-center transition">
@@ -315,65 +253,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
-
-        <!-- Modal Simulasi QRIS & Petunjuk Pembayaran -->
-        <div x-show="paymentModalOpen"
-             x-cloak
-             class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
-            <div @click.away="paymentModalOpen = false" class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-700">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-black text-2xs tracking-wider">QRIS</span>
-                        <h3 class="text-sm font-bold text-white">Pembayaran SportCourt Arena</h3>
-                    </div>
-                    <button @click="paymentModalOpen = false" class="text-slate-400 hover:text-white text-base w-8 h-8 flex items-center justify-center rounded-lg">&times;</button>
-                </div>
-
-                <div class="mt-4 space-y-4">
-                    <!-- Merchant info -->
-                    <div class="text-center">
-                        <div class="text-2xs uppercase tracking-wider text-slate-400 font-semibold">Merchant Resmi</div>
-                        <div class="text-base font-extrabold text-white mt-0.5">SPORTSCOURT ARENA INDONESIA</div>
-                        <div class="text-3xs font-mono text-slate-400 mt-0.5">NMID: ID1020304050607 • A01</div>
-                    </div>
-
-                    <!-- Nominal Tagihan -->
-                    <div class="p-3.5 bg-slate-900 rounded-xl border border-slate-750 text-center">
-                        <span class="text-3xs uppercase tracking-wider text-slate-400 font-bold">Total Tagihan Booking</span>
-                        <div class="text-2xl font-black text-emerald-400 mt-0.5">
-                            Rp {{ number_format($booking->total_price, 0, ',', '.') }}
-                        </div>
-                        <div class="text-3xs text-slate-400 mt-1">
-                            Sisa batas waktu: <span class="font-mono text-amber-300 font-bold" x-text="String(timerMin).padStart(2, '0') + ':' + String(timerSec).padStart(2, '0')"></span>
-                        </div>
-                    </div>
-
-                    <!-- QR Code Mockup -->
-                    <div class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-inner border border-slate-200">
-                        <div class="text-xs font-black tracking-widest text-slate-950 mb-2">QRIS STANDAR NASIONAL</div>
-                        <svg class="w-44 h-44 text-slate-950" viewBox="0 0 100 100" fill="currentColor">
-                            <rect width="100" height="100" fill="white" />
-                            <path fill="#020617" d="M10 10h24v24H10zM14 14h16v16H14zM18 18h8v8h-8zM66 10h24v24H66zM70 14h16v16H70zM74 18h8v8h-8zM10 66h24v24H10zM14 70h16v16H14zM18 74h8v8h-8zM42 10h8v8h-8zM50 18h8v8h-8zM42 26h8v8h-8zM58 10h8v8h-8zM10 42h8v8h-8zM18 50h8v8h-8zM26 42h8v8h-8zM42 42h16v8H42zM50 50h8v16h-8zM42 58h8v8h-8zM66 42h8v8h-8zM82 42h8v8h-8zM74 50h16v8H74zM66 58h8v8h-8zM82 58h8v16h-8zM42 74h8v16h-8zM50 82h16v8H50zM66 74h8v8h-8zM74 82h8v8h-8zM82 74h8v8h-8zM66 90h24v-4H66z"/>
-                        </svg>
-                        <div class="text-3xs text-slate-600 mt-2 text-center font-medium">
-                            Scan via BCA, Mandiri Livin', GoPay, OVO, Dana, ShopeePay
-                        </div>
-                    </div>
-
-                    <!-- Payment Simulation Action -->
-                    <div class="space-y-2 pt-2">
-                        <button type="button"
-                                @click="paymentSimulated = true; paymentModalOpen = false"
-                                class="w-full py-3 min-h-[44px] bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/25 transition text-center flex items-center justify-center gap-2">
-                            <span>✓</span> Simulasikan Pembayaran Berhasil
-                        </button>
-                        <p class="text-3xs text-slate-400 text-center leading-relaxed">
-                            Atau Anda juga dapat melakukan pelunasan langsung secara tunai/debit di kasir arena saat kedatangan.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
