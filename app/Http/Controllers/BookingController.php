@@ -199,7 +199,7 @@ class BookingController extends Controller
             'admin_notes' => null,
         ]);
 
-        return redirect()->route('bookings.index')->with('success', "Booking #{$booking->id} untuk {$court->name} berhasil diajukan! Menunggu persetujuan admin SportCourt.");
+        return redirect()->route('bookings.index')->with('success', "Pembayaran online terverifikasi lunas! Booking #{$booking->id} untuk {$court->name} berhasil dipesan dan sedang menunggu konfirmasi kesiapan lapangan.");
     }
 
     public function show(Booking $booking)

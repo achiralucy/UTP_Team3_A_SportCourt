@@ -140,11 +140,11 @@
                                         </span>
                                     @elseif ($b->status === 'pending')
                                         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                                            ⏳ Menunggu
+                                            ⏳ Cek Lapangan
                                         </span>
                                     @elseif ($b->status === 'rejected')
                                         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                                            ✕ Ditolak
+                                            ✕ Ditolak (Refund)
                                         </span>
                                     @else
                                         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-700 text-slate-400">
@@ -173,9 +173,23 @@
                                         <span class="italic text-slate-500">Perorangan</span>
                                     @endif
                                 </div>
-                                <div class="flex items-center">
-                                    <span class="text-slate-500 w-24">Total Biaya:</span>
-                                    <span class="font-bold text-white">Rp {{ number_format($b->total_price, 0, ',', '.') }}</span>
+                                <div class="flex items-center justify-between pt-1">
+                                    <div class="flex items-center">
+                                        <span class="text-slate-500 w-24">Total Biaya:</span>
+                                        <span class="font-bold text-white">Rp {{ number_format($b->total_price, 0, ',', '.') }}</span>
+                                    </div>
+                                    @if (in_array($b->status, ['pending', 'approved']))
+                                        <span class="inline-flex items-center gap-1 text-3xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                                            <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            Lunas Online
+                                        </span>
+                                    @elseif ($b->status === 'rejected')
+                                        <span class="inline-flex items-center gap-1 text-3xs font-semibold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/20">
+                                            Refund
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 

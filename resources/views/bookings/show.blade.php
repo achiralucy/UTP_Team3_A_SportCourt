@@ -53,15 +53,15 @@
                         <div>
                             @if ($booking->status === 'approved')
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                    ✓ Jadwal Terkonfirmasi
+                                    ✓ Lapangan Siap Main
                                 </span>
                             @elseif ($booking->status === 'pending')
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
-                                    ⏳ Menunggu Konfirmasi Jadwal
+                                    ⏳ Menunggu Kesiapan Lapangan
                                 </span>
                             @elseif ($booking->status === 'rejected')
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                                    ✕ Jadwal Ditolak
+                                    ✕ Jadwal Ditolak (Refund Diproses)
                                 </span>
                             @else
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-700 text-slate-400">
@@ -80,6 +80,10 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                                     </svg>
                                     <span>Lunas (Terbayar Online di Muka)</span>
+                                </span>
+                            @elseif ($booking->status === 'rejected')
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                    Dana Direfund ke Rekening Pengguna
                                 </span>
                             @else
                                 <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-500">
@@ -159,7 +163,13 @@
                             Petunjuk Check-In Arena
                         </div>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Tunjukkan E-Tiket ini kepada petugas resepsionis/kasir SportCourt minimal <strong class="text-white font-semibold">15 menit</strong> sebelum jadwal dimulai untuk konfirmasi pemakaian lapangan.
+                            @if ($booking->status === 'approved')
+                                Pembayaran telah <strong class="text-emerald-300 font-semibold">Lunas Online</strong> dan lapangan telah <strong class="text-white font-semibold">Dikonfirmasi Siap Main</strong>. Tunjukkan E-Tiket ini ke petugas SportCourt minimal 15 menit sebelum bermain untuk akses masuk arena.
+                            @elseif ($booking->status === 'pending')
+                                Pembayaran telah <strong class="text-emerald-300 font-semibold">Lunas Online</strong>. Tim operasional venue sedang memverifikasi kesiapan fisik lapangan sebelum jam main dimulai.
+                            @else
+                                Tiket reservasi ini sudah tidak aktif atau dibatalkan.
+                            @endif
                         </p>
                         <div class="text-2xs text-slate-400 break-all">
                             Validasi Tiket: <span class="font-mono text-emerald-300 font-semibold break-all">SC-{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}-{{ substr(md5($booking->id . $booking->created_at), 0, 6) }}</span>

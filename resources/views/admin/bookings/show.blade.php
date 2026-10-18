@@ -30,15 +30,15 @@
                         <div>
                             @if ($booking->status === 'approved')
                                 <span class="px-3 py-1.5 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                    ✓ Disetujui
+                                    ✓ Lapangan Siap Main
                                 </span>
                             @elseif ($booking->status === 'pending')
                                 <span class="px-3 py-1.5 text-xs font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                                    ⏳ Menunggu Persetujuan
+                                    ⏳ Menunggu Kesiapan Lapangan
                                 </span>
                             @elseif ($booking->status === 'rejected')
                                 <span class="px-3 py-1.5 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                                    ✕ Ditolak Admin
+                                    ✕ Ditolak (Refund Diproses)
                                 </span>
                             @else
                                 <span class="px-3 py-1.5 text-xs font-bold rounded-full bg-slate-700 text-slate-400">
@@ -62,8 +62,17 @@
                             <div class="text-emerald-400 font-mono font-bold mt-0.5">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</div>
                         </div>
                         <div>
-                            <span class="text-slate-500">Total Tarif:</span>
+                            <span class="text-slate-500">Total Tarif & Pembayaran:</span>
                             <div class="text-emerald-400 text-base font-black mt-0.5">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</div>
+                            @if (in_array($booking->status, ['pending', 'approved']))
+                                <span class="inline-flex items-center gap-1 text-3xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 mt-1">
+                                    ✓ Lunas Terbayar Online
+                                </span>
+                            @elseif ($booking->status === 'rejected')
+                                <span class="inline-flex items-center gap-1 text-3xs font-semibold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20 mt-1">
+                                    Dana Direfund ke Rekening
+                                </span>
+                            @endif
                         </div>
                     </div>
 
@@ -128,19 +137,19 @@
             <div class="space-y-6">
                 <!-- Action: Persetujuan / Penolakan -->
                 <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">Tindakan Admin</h3>
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">Verifikasi Kesiapan Lapangan</h3>
 
                     @if ($booking->status === 'pending')
                         <!-- Form Setujui -->
                         <form method="POST" action="{{ route('admin.bookings.approve', $booking) }}" class="mb-4">
                             @csrf
                             <div class="mb-3">
-                                <label for="approve_notes" class="block text-2xs font-semibold text-slate-400 uppercase mb-1">Catatan Persetujuan (Opsional)</label>
-                                <input type="text" name="admin_notes" id="approve_notes" placeholder="Contoh: Harap hadir 15 menit sebelumnya"
+                                <label for="approve_notes" class="block text-2xs font-semibold text-slate-400 uppercase mb-1">Catatan Kesiapan Lapangan (Opsional)</label>
+                                <input type="text" name="admin_notes" id="approve_notes" placeholder="Contoh: Lapangan bersih, lampu LED menyala, bola & rompi disiapkan"
                                        class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                             </div>
                             <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-emerald-600/30 transition">
-                                ✓ Setujui Booking Ini
+                                ✓ Konfirmasi Kesiapan & ACC Jadwal
                             </button>
                         </form>
 
@@ -154,12 +163,12 @@
                         <form method="POST" action="{{ route('admin.bookings.reject', $booking) }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="reject_notes" class="block text-2xs font-semibold text-rose-400 uppercase mb-1">Alasan Penolakan <span class="text-rose-400">*</span></label>
-                                <textarea name="admin_notes" id="reject_notes" rows="2" required placeholder="Contoh: Lapangan sedang disewa acara dinas / pemeliharaan mendadak"
+                                <label for="reject_notes" class="block text-2xs font-semibold text-rose-400 uppercase mb-1">Alasan Pembatalan / Refund <span class="text-rose-400">*</span></label>
+                                <textarea name="admin_notes" id="reject_notes" rows="2" required placeholder="Contoh: Lapangan sedang maintenance darurat / disewa agenda pemda"
                                           class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-rose-500"></textarea>
                             </div>
                             <button type="submit" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-rose-600/30 transition">
-                                ✕ Tolak Permohonan Booking
+                                ✕ Tolak Jadwal & Proses Refund
                             </button>
                         </form>
                     @else

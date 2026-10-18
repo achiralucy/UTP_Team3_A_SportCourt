@@ -95,10 +95,10 @@ class AdminBookingController extends Controller
 
         $booking->update([
             'status' => 'approved',
-            'admin_notes' => $request->admin_notes ?? 'Pemesanan disetujui oleh admin.',
+            'admin_notes' => $request->admin_notes ?? 'Kesiapan lapangan telah dikonfirmasi oleh pengelola venue. Selamat bermain!',
         ]);
 
-        return back()->with('success', "Booking #{$booking->id} berhasil DISETUJUI.");
+        return back()->with('success', "Booking #{$booking->id} berhasil dikonfirmasi. Lapangan siap digunakan oleh penyewa.");
     }
 
     /**
@@ -117,7 +117,7 @@ class AdminBookingController extends Controller
             'admin_notes' => $request->admin_notes,
         ]);
 
-        return back()->with('success', "Booking #{$booking->id} telah DITOLAK dengan alasan dicatat.");
+        return back()->with('success', "Booking #{$booking->id} telah ditolak. Alasan dan proses refund telah dicatat.");
     }
 
     /**

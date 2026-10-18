@@ -26,7 +26,7 @@
             </a>
             <a href="{{ route('admin.bookings.index', array_merge(request()->query(), ['status' => 'pending'])) }}"
                class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition {{ request('status') === 'pending' ? 'bg-amber-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800 text-amber-400 hover:bg-slate-700' }}">
-                Menunggu ({{ $counts['pending'] }})
+                Menunggu Kesiapan ({{ $counts['pending'] }})
             </a>
             <a href="{{ route('admin.bookings.index', array_merge(request()->query(), ['status' => 'approved'])) }}"
                class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition {{ request('status') === 'approved' ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-emerald-400 hover:bg-slate-700' }}">
@@ -135,20 +135,29 @@
                                         <div class="text-xs font-mono text-slate-400">{{ substr($b->start_time, 0, 5) }} - {{ substr($b->end_time, 0, 5) }} WIB</div>
                                     </td>
 
-                                    <!-- Total Biaya -->
-                                    <td class="py-3.5 px-4 font-bold text-emerald-400">
-                                        Rp {{ number_format($b->total_price, 0, ',', '.') }}
+                                    <!-- Total Biaya & Status Bayar -->
+                                    <td class="py-3.5 px-4">
+                                        <div class="font-bold text-white">Rp {{ number_format($b->total_price, 0, ',', '.') }}</div>
+                                        @if (in_array($b->status, ['pending', 'approved']))
+                                            <span class="inline-flex items-center gap-1 text-3xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 mt-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Lunas Online
+                                            </span>
+                                        @elseif ($b->status === 'rejected')
+                                            <span class="inline-flex items-center gap-1 text-3xs font-semibold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20 mt-1">
+                                                Refund
+                                            </span>
+                                        @endif
                                     </td>
 
                                     <!-- Status -->
                                     <td class="py-3.5 px-4">
                                         @if ($b->status === 'approved')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                                ✓ Disetujui
+                                                ✓ Siap Main
                                             </span>
                                         @elseif ($b->status === 'pending')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
-                                                ⏳ Menunggu
+                                                ⏳ Cek Kesiapan
                                             </span>
                                         @elseif ($b->status === 'rejected')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
@@ -174,8 +183,8 @@
                                                 <!-- Tombol Setujui Langsung -->
                                                 <form method="POST" action="{{ route('admin.bookings.approve', $b) }}">
                                                     @csrf
-                                                    <button type="submit" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold transition" title="Setujui Booking">
-                                                        Setujui
+                                                    <button type="submit" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold transition" title="Konfirmasi Kesiapan Lapangan & ACC">
+                                                        ACC Lapangan
                                                     </button>
                                                 </form>
                                             @endif
