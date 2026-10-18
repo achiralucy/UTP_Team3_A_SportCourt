@@ -25,7 +25,28 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
+        $this->assertGuest();
+        $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
+        $response->assertRedirect(route('login'));
+        $response->assertSessionHas('status');
+    }
+
+    public function test_registered_user_can_login_afterwards(): void
+    {
+        $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $this->get(route('login'))->assertSee('Registrasi berhasil');
+
+        $this->post('/login', [
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ])->assertRedirect();
+
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
     }
 }
