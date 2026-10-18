@@ -7,29 +7,50 @@
         color-scheme: dark;
     }
 
+    html.light {
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
     [x-cloak] {
         display: none !important;
     }
 
-    /* Fix Chrome autofill turning white/yellow on dark inputs */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus {
+    /* Fix Chrome autofill */
+    html.dark input:-webkit-autofill,
+    html.dark input:-webkit-autofill:hover,
+    html.dark input:-webkit-autofill:focus,
+    html.dark textarea:-webkit-autofill,
+    html.dark textarea:-webkit-autofill:hover,
+    html.dark textarea:-webkit-autofill:focus,
+    html.dark select:-webkit-autofill,
+    html.dark select:-webkit-autofill:hover,
+    html.dark select:-webkit-autofill:focus {
         -webkit-text-fill-color: #f8fafc !important;
         -webkit-box-shadow: 0 0 0px 1000px #0f172a inset !important;
         transition: background-color 5000s ease-in-out 0s;
     }
 
-    /* Native date and time input dark styling */
-    input[type="date"],
-    input[type="time"] {
+    html.light input:-webkit-autofill,
+    html.light input:-webkit-autofill:hover,
+    html.light input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #0f172a !important;
+        -webkit-box-shadow: 0 0 0px 1000px #f8fafc inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Native date and time input styling */
+    html.dark input[type="date"],
+    html.dark input[type="time"] {
         color-scheme: dark;
+    }
+
+    html.light input[type="date"],
+    html.light input[type="time"] {
+        color-scheme: light;
     }
 
     /* Smooth focus rings */

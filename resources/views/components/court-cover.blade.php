@@ -3,7 +3,9 @@
 <div {{ $attributes->class([
     "relative isolate overflow-hidden rounded-2xl w-full",
     $aspect,
-    $court->category === 'futsal' ? 'bg-gradient-to-br from-blue-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950'
+    $court->category === 'futsal'
+        ? 'bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-800 dark:from-blue-950 dark:via-slate-900 dark:to-slate-950'
+        : 'bg-gradient-to-br from-emerald-600 via-teal-600 to-slate-800 dark:from-emerald-950 dark:via-slate-900 dark:to-slate-950'
 ]) }}>
 @if ($court->image)
     <img
@@ -12,13 +14,13 @@
         class="absolute inset-0 w-full h-full object-cover -z-20"
         loading="lazy"
     >
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/20 -z-10 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 dark:from-slate-950/95 dark:via-slate-950/50 dark:to-slate-950/20 -z-10 pointer-events-none"></div>
 @else
     {{-- Sporty court lines placeholder SVG --}}
     <div class="absolute inset-0 opacity-25 pointer-events-none -z-20">
         @if ($court->category === 'futsal')
             <!-- Futsal Pitch Lines Vector -->
-            <svg class="w-full h-full text-blue-400" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-full h-full text-blue-200 dark:text-blue-400" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="15" y="15" width="370" height="195" rx="4" vector-effect="non-scaling-stroke" />
                 <line x1="200" y1="15" x2="200" y2="210" vector-effect="non-scaling-stroke" />
                 <circle cx="200" cy="112.5" r="35" vector-effect="non-scaling-stroke" />
@@ -30,7 +32,7 @@
             </svg>
         @else
             <!-- Badminton Court Lines Vector -->
-            <svg class="w-full h-full text-emerald-400" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.5">
+            <svg class="w-full h-full text-emerald-200 dark:text-emerald-400" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.5">
                 <rect x="25" y="20" width="350" height="185" vector-effect="non-scaling-stroke" />
                 <line x1="25" y1="36" x2="375" y2="36" stroke-dasharray="4 2" vector-effect="non-scaling-stroke" />
                 <line x1="25" y1="189" x2="375" y2="189" stroke-dasharray="4 2" vector-effect="non-scaling-stroke" />
@@ -44,8 +46,8 @@
             </svg>
         @endif
     </div>
-    <div class="absolute -top-10 -right-10 w-44 h-44 {{ $court->category === 'futsal' ? 'bg-blue-500/15' : 'bg-emerald-500/15' }} rounded-full blur-2xl pointer-events-none -z-10"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent -z-10 pointer-events-none"></div>
+    <div class="absolute -top-10 -right-10 w-44 h-44 {{ $court->category === 'futsal' ? 'bg-blue-400/20 dark:bg-blue-500/15' : 'bg-emerald-400/20 dark:bg-emerald-500/15' }} rounded-full blur-2xl pointer-events-none -z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent dark:from-slate-950 dark:via-slate-950/50 dark:to-transparent -z-10 pointer-events-none"></div>
 @endif
 
     <div class="relative z-10 h-full p-5 flex flex-col justify-between">

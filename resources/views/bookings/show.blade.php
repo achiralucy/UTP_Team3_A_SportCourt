@@ -2,21 +2,21 @@
     <x-slot name="header">
         <div class="flex items-center justify-between no-print">
             <div>
-                <h2 class="font-bold text-2xl text-white tracking-tight">
+                <h2 class="font-bold text-2xl text-slate-900 dark:text-white tracking-tight">
                     Tiket Reservasi Lapangan
                 </h2>
-                <p class="text-xs text-slate-400 mt-1">
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
                     Detail bukti booking lapangan SportCourt
                 </p>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="window.print()" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 min-h-[44px] bg-slate-800 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button onclick="window.print()" class="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                     </svg>
                     Cetak Tiket
                 </button>
-                <a href="{{ route('bookings.index') }}" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center bg-slate-800 rounded-xl border border-slate-700 transition">
+                <a href="{{ route('bookings.index') }}" class="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-700 transition">
                     &larr; Riwayat Booking
                 </a>
             </div>
@@ -24,7 +24,7 @@
     </x-slot>
 
     <div x-data="{ cancelModalOpen: false }" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div id="printableTicket" class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl relative">
+        <div id="printableTicket" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-xl dark:shadow-2xl relative transition-colors">
             <div class="bg-gradient-to-r from-emerald-500 to-teal-400 p-6 text-slate-950 flex items-center justify-between">
                 <div>
                     <span class="text-2xs font-bold uppercase tracking-widest text-emerald-950/80">SportCourt Official E-Ticket</span>
@@ -39,54 +39,54 @@
                 </div>
             </div>
 
-            <div class="relative bg-slate-800 py-2.5 no-print">
-                <div class="border-b-2 border-dashed border-slate-700"></div>
-                <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-900 rounded-full border-r border-slate-700 pointer-events-none"></div>
-                <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-900 rounded-full border-l border-slate-700 pointer-events-none"></div>
+            <div class="relative bg-slate-50 dark:bg-slate-800 py-2.5 no-print transition-colors">
+                <div class="border-b-2 border-dashed border-slate-200 dark:border-slate-700"></div>
+                <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-100 dark:bg-slate-950 rounded-full border-r border-slate-200 dark:border-slate-700 pointer-events-none"></div>
+                <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-100 dark:bg-slate-950 rounded-full border-l border-slate-200 dark:border-slate-700 pointer-events-none"></div>
             </div>
 
             <div class="p-6 sm:p-8 space-y-6">
                 <!-- Dual Status Box -->
-                <div class="p-4 bg-slate-900/80 rounded-2xl border border-slate-750 space-y-3">
+                <div class="p-4 bg-slate-50 dark:bg-slate-900/80 rounded-2xl border border-slate-200 dark:border-slate-750 space-y-3 transition-colors">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <span class="text-xs text-slate-400 font-medium">Status Jadwal Lapangan:</span>
+                        <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Status Jadwal Lapangan:</span>
                         <div>
                             @if ($booking->status === 'approved')
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30">
                                     ✓ Lapangan Siap Main
                                 </span>
                             @elseif ($booking->status === 'pending')
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 animate-pulse">
                                     ⏳ Menunggu Kesiapan Lapangan
                                 </span>
                             @elseif ($booking->status === 'rejected')
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30">
                                     ✕ Jadwal Ditolak (Refund Diproses)
                                 </span>
                             @else
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-700 text-slate-400">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-400">
                                     Dibatalkan
                                 </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="pt-2.5 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <span class="text-xs text-slate-400 font-medium">Status Pembayaran Online:</span>
+                    <div class="pt-2.5 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Status Pembayaran Online:</span>
                         <div>
                             @if (in_array($booking->status, ['pending', 'approved']))
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 inline-flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                                     </svg>
                                     <span>Lunas (Terbayar Online di Muka)</span>
                                 </span>
                             @elseif ($booking->status === 'rejected')
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30">
                                     Dana Direfund ke Rekening Pengguna
                                 </span>
                             @else
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-500">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-500">
                                     Tagihan Dibatalkan
                                 </span>
                             @endif
@@ -96,41 +96,41 @@
 
                 <div class="grid grid-cols-2 gap-4 text-xs">
                     <div>
-                        <span class="text-slate-400 uppercase tracking-wider text-2xs font-semibold">Tanggal Main</span>
-                        <div class="text-sm font-bold text-white mt-1">{{ \Carbon\Carbon::parse($booking->booking_date)->translatedFormat('l, d F Y') }}</div>
+                        <span class="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-2xs font-semibold">Tanggal Main</span>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white mt-1">{{ \Carbon\Carbon::parse($booking->booking_date)->translatedFormat('l, d F Y') }}</div>
                     </div>
 
                     <div>
-                        <span class="text-slate-400 uppercase tracking-wider text-2xs font-semibold">Jam & Durasi</span>
-                        <div class="text-sm font-bold font-mono text-emerald-400 mt-1">
+                        <span class="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-2xs font-semibold">Jam & Durasi</span>
+                        <div class="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1">
                             {{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB
                         </div>
-                        <div class="text-slate-400 text-2xs mt-0.5 font-medium">Durasi: {{ $durationHours }} Jam</div>
+                        <div class="text-slate-500 dark:text-slate-400 text-2xs mt-0.5 font-medium">Durasi: {{ $durationHours }} Jam</div>
                     </div>
 
                     <div>
-                        <span class="text-slate-400 uppercase tracking-wider text-2xs font-semibold">Nama Pemesan</span>
-                        <div class="text-sm font-semibold text-slate-200 mt-1">{{ $booking->user->name }}</div>
-                        <div class="text-slate-400 text-2xs mt-0.5">{{ $booking->user->email }} • {{ $booking->user->phone ?? '-' }}</div>
+                        <span class="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-2xs font-semibold">Nama Pemesan</span>
+                        <div class="text-sm font-semibold text-slate-900 dark:text-slate-200 mt-1">{{ $booking->user->name }}</div>
+                        <div class="text-slate-500 dark:text-slate-400 text-2xs mt-0.5">{{ $booking->user->email }} • {{ $booking->user->phone ?? '-' }}</div>
                     </div>
 
                     <div>
-                        <span class="text-slate-400 uppercase tracking-wider text-2xs font-semibold">Tim / Komunitas</span>
+                        <span class="text-slate-500 dark:text-slate-400 uppercase tracking-wider text-2xs font-semibold">Tim / Komunitas</span>
                         @if ($booking->team)
-                            <div class="text-sm font-bold text-indigo-400 mt-1">{{ $booking->team->name }}</div>
-                            <div class="text-slate-400 text-2xs mt-0.5">Kapten: {{ $booking->team->captain_name }} ({{ $booking->team->captain_phone }})</div>
+                            <div class="text-sm font-bold text-indigo-600 dark:text-indigo-400 mt-1">{{ $booking->team->name }}</div>
+                            <div class="text-slate-500 dark:text-slate-400 text-2xs mt-0.5">Kapten: {{ $booking->team->captain_name }} ({{ $booking->team->captain_phone }})</div>
                         @else
-                            <div class="text-sm text-slate-400 italic mt-1">Perorangan (Tanpa Tim)</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400 italic mt-1">Perorangan (Tanpa Tim)</div>
                         @endif
                     </div>
                 </div>
 
                 @if ($booking->court->facilities)
                     <div class="pt-2">
-                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-300">Fasilitas Termasuk:</span>
+                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Fasilitas Termasuk:</span>
                         <div class="flex flex-wrap gap-1.5 mt-1.5">
                             @foreach (explode(',', $booking->court->facilities) as $f)
-                                <span class="px-2 py-0.5 bg-slate-900 border border-slate-700/80 rounded-lg text-2xs text-slate-300">
+                                <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-lg text-2xs text-slate-700 dark:text-slate-300">
                                     ✓ {{ trim($f) }}
                                 </span>
                             @endforeach
@@ -139,79 +139,79 @@
                 @endif
 
                 @if ($booking->admin_notes)
-                    <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-700/80">
-                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-300">Catatan & Riwayat:</span>
-                        <p class="text-xs text-slate-300 mt-1 italic leading-relaxed whitespace-pre-line">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-700/80">
+                        <span class="text-2xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Catatan & Riwayat:</span>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 italic leading-relaxed whitespace-pre-line">
                             "{{ $booking->admin_notes }}"
                         </p>
                     </div>
                 @endif
 
                 <!-- Check-in & QR Code Section -->
-                <div class="p-4 bg-slate-900/90 rounded-2xl border border-slate-700/80 flex flex-col sm:flex-row items-center gap-4">
-                    <div class="w-24 h-24 shrink-0 p-2 bg-white rounded-xl shadow-lg border border-slate-200 flex items-center justify-center">
+                <div class="p-4 bg-slate-50 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 flex flex-col sm:flex-row items-center gap-4 transition-colors">
+                    <div class="w-24 h-24 shrink-0 p-2 bg-white rounded-xl shadow-md border border-slate-200 flex items-center justify-center">
                         <svg class="w-20 h-20 text-slate-950" viewBox="0 0 100 100" fill="currentColor">
                             <rect width="100" height="100" fill="white" />
                             <path fill="#020617" d="M10 10h24v24H10zM14 14h16v16H14zM18 18h8v8h-8zM66 10h24v24H66zM70 14h16v16H70zM74 18h8v8h-8zM10 66h24v24H10zM14 70h16v16H14zM18 74h8v8h-8zM42 10h8v8h-8zM50 18h8v8h-8zM42 26h8v8h-8zM58 10h8v8h-8zM10 42h8v8h-8zM18 50h8v8h-8zM26 42h8v8h-8zM42 42h16v8H42zM50 50h8v16h-8zM42 58h8v8h-8zM66 42h8v8h-8zM82 42h8v8h-8zM74 50h16v8H74zM66 58h8v8h-8zM82 58h8v16h-8zM42 74h8v16h-8zM50 82h16v8H50zM66 74h8v8h-8zM74 82h8v8h-8zM82 74h8v8h-8zM66 90h24v-4H66z"/>
                         </svg>
                     </div>
                     <div class="space-y-1 text-center sm:text-left flex-1 min-w-0">
-                        <div class="flex items-center justify-center sm:justify-start gap-1.5 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                        <div class="flex items-center justify-center sm:justify-start gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider">
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                             Petunjuk Check-In Arena
                         </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                             @if ($booking->status === 'approved')
-                                Pembayaran telah <strong class="text-emerald-300 font-semibold">Lunas Online</strong> dan lapangan telah <strong class="text-white font-semibold">Dikonfirmasi Siap Main</strong>. Tunjukkan E-Tiket ini ke petugas SportCourt minimal 15 menit sebelum bermain untuk akses masuk arena.
+                                Pembayaran telah <strong class="text-emerald-700 dark:text-emerald-300 font-semibold">Lunas Online</strong> dan lapangan telah <strong class="text-slate-900 dark:text-white font-semibold">Dikonfirmasi Siap Main</strong>. Tunjukkan E-Tiket ini ke petugas SportCourt minimal 15 menit sebelum bermain untuk akses masuk arena.
                             @elseif ($booking->status === 'pending')
-                                Pembayaran telah <strong class="text-emerald-300 font-semibold">Lunas Online</strong>. Tim operasional venue sedang memverifikasi kesiapan fisik lapangan sebelum jam main dimulai.
+                                Pembayaran telah <strong class="text-emerald-700 dark:text-emerald-300 font-semibold">Lunas Online</strong>. Tim operasional venue sedang memverifikasi kesiapan fisik lapangan sebelum jam main dimulai.
                             @else
                                 Tiket reservasi ini sudah tidak aktif atau dibatalkan.
                             @endif
                         </p>
-                        <div class="text-2xs text-slate-400 break-all">
-                            Validasi Tiket: <span class="font-mono text-emerald-300 font-semibold break-all">SC-{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}-{{ substr(md5($booking->id . $booking->created_at), 0, 6) }}</span>
+                        <div class="text-2xs text-slate-500 dark:text-slate-400 break-all">
+                            Validasi Tiket: <span class="font-mono text-emerald-700 dark:text-emerald-300 font-semibold break-all">SC-{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}-{{ substr(md5($booking->id . $booking->created_at), 0, 6) }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-700 flex items-center justify-between">
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
                     <div>
-                        <span class="text-2xs text-slate-400 uppercase font-semibold">Rincian Tarif</span>
-                        <div class="text-xs text-slate-300 font-medium">Rp {{ number_format($booking->court->price_per_hour, 0, ',', '.') }}/jam &times; {{ $durationHours }} jam</div>
+                        <span class="text-2xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Rincian Tarif</span>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 font-medium">Rp {{ number_format($booking->court->price_per_hour, 0, ',', '.') }}/jam &times; {{ $durationHours }} jam</div>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xs text-slate-400 uppercase font-semibold">Total Tagihan</span>
-                        <div class="text-2xl font-black text-emerald-400">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</div>
+                        <span class="text-2xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Total Tagihan</span>
+                        <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</div>
                     </div>
                 </div>
 
                 <!-- Bukti Pembayaran Online Lunas (Terbaca di Layar & Cetak Tiket) -->
-                <div class="p-4 bg-emerald-950/40 rounded-2xl border border-emerald-500/30 text-xs space-y-1.5">
-                    <div class="font-bold uppercase tracking-wider text-emerald-300 flex items-center justify-between">
+                <div class="p-4 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-500/30 text-xs space-y-1.5 transition-colors">
+                    <div class="font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
                         <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                             Pembayaran Online Terverifikasi
                         </span>
-                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-black text-2xs tracking-wider">✓ LUNAS</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 font-black text-2xs tracking-wider">✓ LUNAS</span>
                     </div>
-                    <p class="text-2xs text-slate-300 leading-relaxed">
-                        Total sewa sebesar <strong class="text-white font-semibold">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</strong> telah dibayar lunas melalui gateway online SportCourt saat reservasi diajukan. Tunjukkan e-tiket ini kepada petugas venue untuk scan barcode check-in sebelum kick-off.
+                    <p class="text-2xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Total sewa sebesar <strong class="text-slate-900 dark:text-white font-semibold">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</strong> telah dibayar lunas melalui gateway online SportCourt saat reservasi diajukan. Tunjukkan e-tiket ini kepada petugas venue untuk scan barcode check-in sebelum kick-off.
                     </p>
                 </div>
 
-                <div class="pt-4 border-t border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-                    <a href="{{ route('bookings.index') }}" class="w-full sm:w-auto px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-xl text-xs font-semibold text-center transition">
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+                    <a href="{{ route('bookings.index') }}" class="w-full sm:w-auto px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-700 dark:hover:bg-slate-650 dark:text-slate-200 rounded-xl text-xs font-semibold text-center transition">
                         Kembali
                     </a>
 
                     <div class="w-full sm:w-auto flex items-center justify-end gap-2">
                         @if ($booking->status === 'pending')
-                            <a href="{{ route('bookings.edit', $booking) }}" class="flex-1 sm:flex-none px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-semibold text-center transition">
+                            <a href="{{ route('bookings.edit', $booking) }}" class="flex-1 sm:flex-none px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-500/20 dark:hover:bg-amber-500/30 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 rounded-xl text-xs font-semibold text-center transition">
                                 Ubah Jadwal
                             </a>
                         @endif
@@ -219,7 +219,7 @@
                         @if (in_array($booking->status, ['pending', 'approved']) && !$isPast)
                             <button type="button"
                                     @click="cancelModalOpen = true"
-                                    class="w-full sm:w-auto px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold transition">
+                                    class="w-full sm:w-auto px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-rose-100 hover:bg-rose-200 text-rose-800 dark:bg-rose-500/20 dark:hover:bg-rose-500/30 dark:text-rose-300 border border-rose-200 dark:border-rose-500/30 rounded-xl text-xs font-semibold transition cursor-pointer">
                                 Batalkan Booking
                             </button>
                         @endif
@@ -230,35 +230,35 @@
 
         <div x-show="cancelModalOpen"
              x-cloak
-             class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
-            <div @click.away="cancelModalOpen = false" class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-700">
-                    <h3 class="text-base font-bold text-white flex items-center gap-2">
-                        <span class="text-rose-400">⚠️</span> Konfirmasi Pembatalan
+             class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/60 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+            <div @click.away="cancelModalOpen = false" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="text-rose-500">⚠️</span> Konfirmasi Pembatalan
                     </h3>
-                    <button @click="cancelModalOpen = false" class="text-slate-400 hover:text-white text-sm w-8 h-8 flex items-center justify-center rounded-lg">&times;</button>
+                    <button @click="cancelModalOpen = false" class="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm w-8 h-8 flex items-center justify-center rounded-lg">&times;</button>
                 </div>
 
                 <form action="{{ route('bookings.cancel', $booking) }}" method="POST" class="mt-4 space-y-4">
                     @csrf
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                         Apakah Anda yakin ingin membatalkan booking tiket <strong>#SC-{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}</strong>? Slot waktu lapangan ini akan dibebaskan kembali.
                     </p>
 
                     <div>
-                        <label for="modalReason" class="block text-2xs font-bold uppercase tracking-wider text-slate-300 mb-1">
+                        <label for="modalReason" class="block text-2xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                             Alasan Pembatalan (Opsional):
                         </label>
                         <textarea name="reason" id="modalReason" rows="2"
                                   placeholder="Contoh: Ada keperluan mendadak, tim berhalangan..."
-                                  class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"></textarea>
+                                  class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-rose-500"></textarea>
                     </div>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
-                        <button type="button" @click="cancelModalOpen = false" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-medium rounded-xl transition">
+                        <button type="button" @click="cancelModalOpen = false" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-700 dark:hover:bg-slate-650 dark:text-slate-200 text-xs font-medium rounded-xl transition cursor-pointer">
                             Batal
                         </button>
-                        <button type="submit" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition">
+                        <button type="submit" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition cursor-pointer">
                             Ya, Batalkan Booking Ini
                         </button>
                     </div>
