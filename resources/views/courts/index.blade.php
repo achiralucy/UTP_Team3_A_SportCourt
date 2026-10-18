@@ -116,7 +116,7 @@
 
                             @if ($court->status === 'available')
                                 <a href="{{ route('bookings.create', ['court_id' => $court->id]) }}" class="min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
-                                    Sewa Lapangan &rarr;
+                                    Sewa Lapangan 
                                 </a>
                             @else
                                 <span class="min-h-[44px] text-xs font-medium text-slate-500 dark:text-slate-400 px-4 py-2.5 bg-slate-100 dark:bg-slate-900 rounded-xl inline-flex items-center justify-center">
