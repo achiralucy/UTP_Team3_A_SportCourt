@@ -107,6 +107,10 @@
                                         <a href="{{ route('bookings.create', ['court_id' => $court->id]) }}" class="min-h-[44px] px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
                                             Booking Lapangan Ini &rarr;
                                         </a>
+                                    @elseif (Auth::user()->isAdmin())
+                                        <a href="{{ route('admin.courts.edit', $court) }}" class="min-h-[44px] px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-600/30 transition inline-flex items-center justify-center">
+                                            Kelola / Edit Lapangan Ini &rarr;
+                                        </a>
                                     @endif
                                 @else
                                     <a href="{{ route('login') }}" class="min-h-[44px] px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">

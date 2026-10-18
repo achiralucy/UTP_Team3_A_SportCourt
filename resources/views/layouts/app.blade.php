@@ -25,13 +25,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-100 dark:bg-slate-900 text-slate-850 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+    <body class="font-sans antialiased bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
         <div class="flex-grow">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-slate-850 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
+                <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -41,8 +41,8 @@
             <!-- Flash Messages -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
                 @if (session('success'))
-                    <div class="mb-4 flex items-center p-4 text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 rounded-xl shadow-lg" role="alert">
-                        <svg class="flex-shrink-0 inline w-5 h-5 me-3" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="mb-4 flex items-center p-4 text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-500/30 rounded-xl shadow-sm" role="alert">
+                        <svg class="flex-shrink-0 inline w-5 h-5 me-3 text-emerald-600 dark:text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
                         <span class="sr-only">Sukses</span>
@@ -53,8 +53,8 @@
                 @endif
 
                 @if (session('error'))
-                    <div class="mb-4 flex items-center p-4 text-rose-300 bg-rose-950/60 border border-rose-500/30 rounded-xl shadow-lg" role="alert">
-                        <svg class="flex-shrink-0 inline w-5 h-5 me-3" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="mb-4 flex items-center p-4 text-rose-800 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-500/30 rounded-xl shadow-sm" role="alert">
+                        <svg class="flex-shrink-0 inline w-5 h-5 me-3 text-rose-600 dark:text-rose-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                         <span class="sr-only">Error</span>
@@ -65,9 +65,9 @@
                 @endif
 
                 @if ($errors->any())
-                    <div class="mb-4 p-4 text-rose-300 bg-rose-950/60 border border-rose-500/30 rounded-xl shadow-lg" role="alert">
+                    <div class="mb-4 p-4 text-rose-800 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-500/30 rounded-xl shadow-sm" role="alert">
                         <div class="flex items-center mb-2 font-medium">
-                            <svg class="w-5 h-5 me-2" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 me-2 text-rose-600 dark:text-rose-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                             </svg>
                             Terdapat kesalahan pada isian formulir:

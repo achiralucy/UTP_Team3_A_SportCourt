@@ -14,6 +14,10 @@
                     <a href="{{ route('bookings.create') }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/25 transition">
                         + Sewa Lapangan
                     </a>
+                @elseif (Auth::user()->isAdmin())
+                    <a href="{{ route('admin.courts.create') }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/25 transition">
+                        + Tambah Lapangan
+                    </a>
                 @endif
             @endauth
         </div>
@@ -115,9 +119,21 @@
                             </a>
 
                             @if ($court->status === 'available')
-                                <a href="{{ route('bookings.create', ['court_id' => $court->id]) }}" class="min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
-                                    Sewa Lapangan 
-                                </a>
+                                @auth
+                                    @if (Auth::user()->isAdmin())
+                                        <a href="{{ route('admin.courts.edit', $court) }}" class="min-h-[44px] px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-600/30 transition inline-flex items-center justify-center">
+                                            Kelola Lapangan
+                                        </a>
+                                    @else
+                                        <a href="{{ route('bookings.create', ['court_id' => $court->id]) }}" class="min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
+                                            Sewa Lapangan
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{ route('bookings.create', ['court_id' => $court->id]) }}" class="min-h-[44px] px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
+                                        Sewa Lapangan
+                                    </a>
+                                @endauth
                             @else
                                 <span class="min-h-[44px] text-xs font-medium text-slate-500 dark:text-slate-400 px-4 py-2.5 bg-slate-100 dark:bg-slate-900 rounded-xl inline-flex items-center justify-center">
                                     Tidak Tersedia

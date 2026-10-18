@@ -340,4 +340,48 @@ class BookingTest extends TestCase
         ]);
         $response->assertJsonFragment(['start_time' => '10:00', 'end_time' => '12:00']);
     }
+
+    public function test_admin_cannot_access_booking_create_and_is_redirected_to_admin_dashboard(): void
+    {
+        $response = $this->actingAs($this->admin)->get(route('bookings.create'));
+
+        $response->assertRedirect(route('admin.dashboard'));
+        $response->assertSessionHas('error');
+    }
+
+    public function test_admin_cannot_store_booking_and_is_redirected(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('bookings.store'), [
+            'court_id' => $this->court->id,
+            'booking_date' => now()->addDays(2)->toDateString(),
+            'start_time' => '14:00',
+            'end_time' => '16:00',
+        ]);
+
+        $response->assertRedirect(route('admin.dashboard'));
+        $response->assertSessionHas('error');
+        $this->assertDatabaseMissing('bookings', [
+            'user_id' => $this->admin->id,
+        ]);
+    }
+
+    public function test_guest_visiting_booking_create_then_logging_in_as_admin_redirects_to_admin_dashboard(): void
+    {
+        // Guest visits bookings.create -> redirected to login with intended session
+        $this->withSession(['url.intended' => route('bookings.create', ['court_id' => $this->court->id])]);
+
+        // Login as admin
+        $response = $this->post('/login', [
+            'email' => $this->admin->email,
+            'password' => 'password',
+        ]);
+
+        // Must redirect to dashboard which sends admin to admin.dashboard
+        $response->assertRedirect(route('dashboard', absolute: false));
+
+        // Follow redirect to dashboard
+        $redirectResponse = $this->actingAs($this->admin)->get(route('dashboard'));
+        $redirectResponse->assertRedirect(route('admin.dashboard'));
+    }
 }
+
