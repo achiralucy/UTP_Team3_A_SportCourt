@@ -9,7 +9,7 @@
                     Pilih lapangan, cek ketersediaan jam, dan lakukan reservasi secara instan
                 </p>
             </div>
-            <a href="{{ route('bookings.index') }}" class="text-xs font-semibold text-slate-400 hover:text-white px-3 py-2 bg-slate-800 rounded-xl border border-slate-700 transition">
+            <a href="{{ route('bookings.index') }}" class="inline-flex items-center text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 min-h-[44px] bg-slate-800 rounded-xl border border-slate-700 transition">
                 &larr; Riwayat Booking
             </a>
         </div>
@@ -26,7 +26,7 @@
                             Pilih Lapangan <span class="text-rose-400">*</span>
                         </label>
                         <select name="court_id" id="court_id" required
-                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('court_id') border-rose-500 @enderror">
+                                class="w-full px-4 py-2.5 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('court_id') border-rose-500 @enderror">
                             <option value="">-- Pilih Lapangan Tersedia --</option>
                             @foreach ($courts as $court)
                                 <option value="{{ $court->id }}"
@@ -47,12 +47,12 @@
                             <label for="team_id" class="block text-xs font-bold uppercase tracking-wider text-slate-300">
                                 Bermain Bersama Tim / Komunitas (Opsional)
                             </label>
-                            <a href="{{ route('teams.create') }}" class="text-2xs text-indigo-400 hover:text-indigo-300 font-semibold" target="_blank">
+                            <a href="{{ route('teams.create') }}" class="min-h-[44px] inline-flex items-center text-2xs text-indigo-400 hover:text-indigo-300 font-semibold" target="_blank">
                                 + Daftarkan Tim Baru
                             </a>
                         </div>
                         <select name="team_id" id="team_id"
-                                class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('team_id') border-rose-500 @enderror">
+                                class="w-full px-4 py-2.5 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('team_id') border-rose-500 @enderror">
                             <option value="">-- Tanpa Tim (Sewa Perorangan) --</option>
                             @foreach ($teams as $team)
                                 <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }}>
@@ -74,7 +74,8 @@
                                value="{{ old('booking_date', $selectedDate) }}"
                                min="{{ date('Y-m-d') }}"
                                max="{{ date('Y-m-d', strtotime('+30 days')) }}" required
-                               class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('booking_date') border-rose-500 @enderror">
+                               style="color-scheme: dark;"
+                               class="w-full px-4 py-2.5 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('booking_date') border-rose-500 @enderror">
                         <p class="text-2xs text-slate-400 mt-1">Pemesanan dapat dilakukan maksimal 30 hari ke depan.</p>
                         @error('booking_date')
                             <p class="text-xs text-rose-400 mt-1">{{ $message }}</p>
@@ -90,7 +91,7 @@
                             <span id="scheduleStatusText" class="text-2xs text-slate-400">Pilih lapangan & tanggal</span>
                         </div>
                         <div id="slotsContainer" class="flex flex-wrap gap-2 pt-1">
-                            <span class="text-xs text-slate-500 italic">Silakan pilih lapangan terlebih dahulu untuk memuat jadwal.</span>
+                            <span class="text-xs text-slate-400 italic">Silakan pilih lapangan terlebih dahulu untuk memuat jadwal.</span>
                         </div>
                     </div>
 
@@ -100,7 +101,8 @@
                                 Jam Mulai (06:00 - 22:00) <span class="text-rose-400">*</span>
                             </label>
                             <input type="time" name="start_time" id="start_time" value="{{ old('start_time', '19:00') }}" min="06:00" max="22:00" step="1800" required
-                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('start_time') border-rose-500 @enderror">
+                                   style="color-scheme: dark;"
+                                   class="w-full px-4 py-2.5 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('start_time') border-rose-500 @enderror">
                             @error('start_time')
                                 <p class="text-xs text-rose-400 mt-1">{{ $message }}</p>
                             @enderror
@@ -111,7 +113,8 @@
                                 Jam Selesai (Maks. 23:00) <span class="text-rose-400">*</span>
                             </label>
                             <input type="time" name="end_time" id="end_time" value="{{ old('end_time', '21:00') }}" min="07:00" max="23:00" step="1800" required
-                                   class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('end_time') border-rose-500 @enderror">
+                                   style="color-scheme: dark;"
+                                   class="w-full px-4 py-2.5 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-emerald-500 @error('end_time') border-rose-500 @enderror">
                             @error('end_time')
                                 <p class="text-xs text-rose-400 mt-1">{{ $message }}</p>
                             @enderror
@@ -121,19 +124,19 @@
                     <div id="clientAlert" class="hidden p-3.5 rounded-xl text-xs font-medium border"></div>
 
                     <div class="pt-4 border-t border-slate-700 flex items-center justify-end gap-3">
-                        <a href="{{ route('bookings.index') }}" class="px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-650 text-slate-200 text-sm font-medium transition">
+                        <a href="{{ route('bookings.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 min-h-[44px] rounded-xl bg-slate-700 hover:bg-slate-650 text-slate-200 text-sm font-medium transition">
                             Batal
                         </a>
-                        <button type="submit" id="submitBtn" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold shadow-lg shadow-emerald-600/30 transition">
+                        <button type="submit" id="submitBtn" class="inline-flex items-center justify-center px-6 py-2.5 min-h-[44px] rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold shadow-lg shadow-emerald-600/30 transition">
                             Kirim Pengajuan Booking
                         </button>
                     </div>
                 </form>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-4 lg:sticky lg:top-24 self-start">
                 <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Estimasi Tarif Sewa</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-4">Estimasi Tarif Sewa</h3>
 
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between">
@@ -155,14 +158,49 @@
                     </div>
                 </div>
 
+                <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm text-xs space-y-3">
+                    <h4 class="font-bold text-white uppercase tracking-wider text-2xs flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                        Pilihan Pembayaran & Check-In
+                    </h4>
+                    <p class="text-slate-300 leading-relaxed text-2xs">
+                        Setelah pengajuan booking diverifikasi oleh tim SportCourt, Anda dapat menyelesaikan transaksi melalui:
+                    </p>
+                    <div class="space-y-2 pt-1 text-2xs text-slate-300">
+                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
+                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">QRIS</span>
+                            <div>
+                                <div class="font-semibold text-slate-200 text-xs">QRIS Instan Nasional</div>
+                                <div class="text-3xs text-slate-400">GoPay, OVO, Dana, ShopeePay, BCA, Livin'</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
+                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">VA</span>
+                            <div>
+                                <div class="font-semibold text-slate-200 text-xs">Transfer Bank / Virtual Account</div>
+                                <div class="text-3xs text-slate-400">BCA, Mandiri, BRI, BNI</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
+                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">CASH</span>
+                            <div>
+                                <div class="font-semibold text-slate-200 text-xs">Bayar di Kasir Venue</div>
+                                <div class="text-3xs text-slate-400">Tunai / EDC Debit saat check-in di arena</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm text-xs text-slate-400 space-y-2">
                     <h4 class="font-bold text-white uppercase tracking-wider text-2xs">Ketentuan Sewa SportCourt</h4>
                     <ul class="list-disc list-inside space-y-1.5 leading-relaxed">
-                        <li>Jam operasional: <strong>06:00 - 23:00 WIB</strong>.</li>
+                        <li>Jam operasional arena: <strong>06:00 - 23:00 WIB</strong>.</li>
                         <li>Durasi sewa: Minimal <strong>1 jam (60 menit)</strong>, maksimal <strong>6 jam</strong>.</li>
                         <li>Booking pada hari yang sama tidak boleh memilih jam yang sudah terlewat.</li>
-                        <li>Hadir 15 menit sebelum waktu main dimulai dengan sepatu olahraga indoor.</li>
-                        <li>Perubahan jadwal (reschedule) & pembatalan dapat dilakukan selama status booking masih <span class="text-amber-400 font-semibold">Menunggu</span>.</li>
+                        <li>Wajib hadir 15 menit sebelum waktu main dimulai dan membawa sepatu olahraga khusus indoor.</li>
+                        <li>Perubahan jadwal (reschedule) & pembatalan dapat dilakukan selama status booking masih <span class="text-amber-400 font-semibold">Menunggu Konfirmasi</span>.</li>
                     </ul>
                 </div>
             </div>

@@ -29,13 +29,13 @@
                         </svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama tim, nama kapten..."
-                           class="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                           class="w-full pl-10 pr-4 py-2 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
                 </div>
-                <button type="submit" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-sm font-medium transition">
+                <button type="submit" class="px-5 py-2 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-sm font-medium transition">
                     Cari
                 </button>
                 @if (request('search'))
-                    <a href="{{ route('teams.index') }}" class="px-4 py-2 bg-slate-800 hover:bg-slate-750 text-slate-400 text-sm rounded-xl transition flex items-center justify-center">
+                    <a href="{{ route('teams.index') }}" class="px-4 py-2 min-h-[44px] bg-slate-800 hover:bg-slate-750 text-slate-400 text-sm rounded-xl transition inline-flex items-center justify-center">
                         Reset
                     </a>
                 @endif
@@ -104,19 +104,19 @@
                         </div>
 
                         <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between gap-2 mt-4">
-                            <a href="{{ route('teams.show', $team) }}" class="text-xs font-medium text-slate-300 hover:text-white px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-650 transition">
+                            <a href="{{ route('teams.show', $team) }}" class="text-xs font-medium text-slate-300 hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-slate-700 hover:bg-slate-650 transition">
                                 Detail
                             </a>
 
                             <div class="flex items-center gap-2">
-                                <a href="{{ route('teams.edit', $team) }}" class="text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 transition">
+                                <a href="{{ route('teams.edit', $team) }}" class="text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-amber-500/10 border border-amber-500/20 transition">
                                     Edit
                                 </a>
 
                                 <form method="POST" action="{{ route('teams.destroy', $team) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data tim ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-xs font-medium text-rose-400 hover:text-rose-300 px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 transition">
+                                    <button type="submit" class="text-xs font-medium text-rose-400 hover:text-rose-300 px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-rose-500/10 border border-rose-500/20 transition">
                                         Hapus
                                     </button>
                                 </form>

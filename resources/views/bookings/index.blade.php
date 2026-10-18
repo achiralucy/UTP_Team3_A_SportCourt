@@ -9,7 +9,7 @@
                     Daftar reservasi jadwal main futsal & badminton milik Anda
                 </p>
             </div>
-            <a href="{{ route('bookings.create') }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/25 transition">
+            <a href="{{ route('bookings.create') }}" class="inline-flex items-center px-4 py-2.5 min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/25 transition">
                 <svg class="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
@@ -21,29 +21,29 @@
     <div x-data="{ cancelModalOpen: false, cancelAction: '', cancelBookingTitle: '' }" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div class="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-4">
             <a href="{{ route('bookings.index', array_merge(request()->except('status', 'page'), ['status' => 'all'])) }}"
-               class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 {{ !request('status') || request('status') === 'all' ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
+               class="px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 {{ !request('status') || request('status') === 'all' ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700' }}">
                 <span>Semua</span>
-                <span class="px-1.5 py-0.2 rounded-full text-2xs bg-slate-900/60 text-slate-200">{{ $stats['all'] }}</span>
+                <span class="px-1.5 py-0.5 rounded-full text-2xs bg-slate-900/60 text-slate-200">{{ $stats['all'] }}</span>
             </a>
             <a href="{{ route('bookings.index', array_merge(request()->except('status', 'page'), ['status' => 'pending'])) }}"
-               class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 {{ request('status') === 'pending' ? 'bg-amber-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800 text-amber-400 hover:bg-slate-700' }}">
+               class="px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 {{ request('status') === 'pending' ? 'bg-amber-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800 text-amber-400 hover:bg-slate-700' }}">
                 <span>⏳ Menunggu</span>
-                <span class="px-1.5 py-0.2 rounded-full text-2xs bg-amber-950/60 text-amber-200">{{ $stats['pending'] }}</span>
+                <span class="px-1.5 py-0.5 rounded-full text-2xs bg-amber-950/60 text-amber-200">{{ $stats['pending'] }}</span>
             </a>
             <a href="{{ route('bookings.index', array_merge(request()->except('status', 'page'), ['status' => 'approved'])) }}"
-               class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 {{ request('status') === 'approved' ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-emerald-400 hover:bg-slate-700' }}">
+               class="px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 {{ request('status') === 'approved' ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-emerald-400 hover:bg-slate-700' }}">
                 <span>✓ Disetujui</span>
-                <span class="px-1.5 py-0.2 rounded-full text-2xs bg-emerald-950/60 text-emerald-200">{{ $stats['approved'] }}</span>
+                <span class="px-1.5 py-0.5 rounded-full text-2xs bg-emerald-950/60 text-emerald-200">{{ $stats['approved'] }}</span>
             </a>
             <a href="{{ route('bookings.index', array_merge(request()->except('status', 'page'), ['status' => 'rejected'])) }}"
-               class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 {{ request('status') === 'rejected' ? 'bg-rose-600 text-white shadow-md' : 'bg-slate-800 text-rose-400 hover:bg-slate-700' }}">
+               class="px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 {{ request('status') === 'rejected' ? 'bg-rose-600 text-white shadow-md' : 'bg-slate-800 text-rose-400 hover:bg-slate-700' }}">
                 <span>✕ Ditolak</span>
-                <span class="px-1.5 py-0.2 rounded-full text-2xs bg-rose-950/60 text-rose-200">{{ $stats['rejected'] }}</span>
+                <span class="px-1.5 py-0.5 rounded-full text-2xs bg-rose-950/60 text-rose-200">{{ $stats['rejected'] }}</span>
             </a>
             <a href="{{ route('bookings.index', array_merge(request()->except('status', 'page'), ['status' => 'cancelled'])) }}"
-               class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 {{ request('status') === 'cancelled' ? 'bg-slate-700 text-white shadow-md' : 'bg-slate-800 text-slate-400 hover:bg-slate-700' }}">
+               class="px-3.5 py-2 min-h-[44px] rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 {{ request('status') === 'cancelled' ? 'bg-slate-700 text-white shadow-md' : 'bg-slate-800 text-slate-400 hover:bg-slate-700' }}">
                 <span>Dibatalkan</span>
-                <span class="px-1.5 py-0.2 rounded-full text-2xs bg-slate-900/60 text-slate-400">{{ $stats['cancelled'] }}</span>
+                <span class="px-1.5 py-0.5 rounded-full text-2xs bg-slate-900/60 text-slate-400">{{ $stats['cancelled'] }}</span>
             </a>
         </div>
 
@@ -56,11 +56,11 @@
                 <div>
                     <input type="text" name="search" value="{{ request('search') }}"
                            placeholder="Cari lapangan atau tim..."
-                           class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                           class="w-full px-3.5 py-2 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
                 </div>
 
                 <div>
-                    <select name="court_id" class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <select name="court_id" class="w-full px-3.5 py-2 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                         <option value="">-- Semua Lapangan --</option>
                         @foreach ($courts as $c)
                             <option value="{{ $c->id }}" {{ request('court_id') == $c->id ? 'selected' : '' }}>
@@ -71,16 +71,16 @@
                 </div>
 
                 <div>
-                    <input type="date" name="date" value="{{ request('date') }}"
-                           class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <input type="date" name="date" value="{{ request('date') }}" style="color-scheme: dark;"
+                           class="w-full px-3.5 py-2 min-h-[44px] bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold transition">
+                    <button type="submit" class="flex-1 px-4 py-2 min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold transition">
                         Terapkan Filter
                     </button>
                     @if (request()->hasAny(['search', 'court_id', 'date', 'status']))
-                        <a href="{{ route('bookings.index') }}" class="px-3 py-2 bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-xl text-xs font-medium transition" title="Reset filter">
+                        <a href="{{ route('bookings.index') }}" class="px-3 py-2 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-xl text-xs font-medium transition" title="Reset filter">
                             ✕
                         </a>
                     @endif
@@ -99,7 +99,7 @@
                 <p class="text-sm text-slate-400 max-w-sm mx-auto mt-1 mb-6">
                     Tidak ditemukan data booking dengan filter yang dipilih. Silakan ubah filter atau lakukan pemesanan lapangan baru.
                 </p>
-                <a href="{{ route('bookings.create') }}" class="inline-flex items-center px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/30 transition">
+                <a href="{{ route('bookings.create') }}" class="inline-flex items-center px-5 py-2.5 min-h-[44px] bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/30 transition">
                     Sewa Lapangan Sekarang
                 </a>
             </div>
@@ -187,13 +187,13 @@
                         </div>
 
                         <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between gap-2 mt-4">
-                            <a href="{{ route('bookings.show', $b) }}" class="text-xs font-semibold text-slate-200 hover:text-white px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-650 transition">
+                            <a href="{{ route('bookings.show', $b) }}" class="text-xs font-semibold text-slate-200 hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-slate-700 hover:bg-slate-650 transition">
                                 Lihat Tiket
                             </a>
 
                             <div class="flex items-center gap-2">
                                 @if ($b->status === 'pending')
-                                    <a href="{{ route('bookings.edit', $b) }}" class="text-xs font-medium text-amber-400 hover:text-amber-300 px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 transition">
+                                    <a href="{{ route('bookings.edit', $b) }}" class="text-xs font-medium text-amber-400 hover:text-amber-300 px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-amber-500/10 border border-amber-500/20 transition">
                                         Ubah Jadwal
                                     </a>
                                 @endif
@@ -201,7 +201,7 @@
                                 @if (in_array($b->status, ['pending', 'approved']) && !$isPast)
                                     <button type="button"
                                             @click="cancelModalOpen = true; cancelAction = '{{ route('bookings.cancel', $b) }}'; cancelBookingTitle = '#{{ $b->id }} - {{ $b->court->name }}';"
-                                            class="text-xs font-medium text-rose-400 hover:text-rose-300 px-2.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 transition">
+                                            class="text-xs font-medium text-rose-400 hover:text-rose-300 px-3 py-2 min-h-[44px] inline-flex items-center rounded-xl bg-rose-500/10 border border-rose-500/20 transition">
                                         Batalkan
                                     </button>
                                 @endif
@@ -218,13 +218,13 @@
 
         <div x-show="cancelModalOpen"
              x-cloak
-             class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+             class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div @click.away="cancelModalOpen = false" class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
                 <div class="flex items-center justify-between pb-3 border-b border-slate-700">
                     <h3 class="text-base font-bold text-white flex items-center gap-2">
                         <span class="text-rose-400">⚠️</span> Batalkan Booking
                     </h3>
-                    <button @click="cancelModalOpen = false" class="text-slate-400 hover:text-white text-sm">&times;</button>
+                    <button @click="cancelModalOpen = false" class="text-slate-400 hover:text-white text-sm w-8 h-8 flex items-center justify-center rounded-lg">&times;</button>
                 </div>
 
                 <form :action="cancelAction" method="POST" class="mt-4 space-y-4">
@@ -234,7 +234,7 @@
                     </p>
 
                     <div>
-                        <label for="cancelReason" class="block text-2xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                        <label for="cancelReason" class="block text-2xs font-bold uppercase tracking-wider text-slate-300 mb-1">
                             Alasan Pembatalan (Opsional):
                         </label>
                         <textarea name="reason" id="cancelReason" rows="2"
@@ -243,10 +243,10 @@
                     </div>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
-                        <button type="button" @click="cancelModalOpen = false" class="px-4 py-2 bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-medium rounded-xl transition">
+                        <button type="button" @click="cancelModalOpen = false" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-medium rounded-xl transition">
                             Tutup
                         </button>
-                        <button type="submit" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition">
+                        <button type="submit" class="px-5 py-2.5 min-h-[44px] inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-rose-600/30 transition">
                             Konfirmasi Pembatalan
                         </button>
                     </div>

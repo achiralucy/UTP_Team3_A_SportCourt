@@ -10,10 +10,10 @@
                 </p>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('teams.edit', $team) }}" class="text-xs font-semibold text-amber-300 hover:text-white px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 rounded-xl border border-amber-500/30 transition">
+                <a href="{{ route('teams.edit', $team) }}" class="text-xs font-semibold text-amber-300 hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center bg-amber-500/10 hover:bg-amber-500/20 rounded-xl border border-amber-500/30 transition">
                     Edit Tim
                 </a>
-                <a href="{{ route('teams.index') }}" class="text-xs font-semibold text-slate-400 hover:text-white px-3 py-2 bg-slate-800 rounded-xl border border-slate-700 transition">
+                <a href="{{ route('teams.index') }}" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center bg-slate-800 rounded-xl border border-slate-700 transition">
                     &larr; Kembali
                 </a>
             </div>

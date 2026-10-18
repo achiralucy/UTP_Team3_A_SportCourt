@@ -76,13 +76,15 @@
             </main>
         </div>
 
-        <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500 mt-12">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-400 mt-12">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div>
-                    <span class="font-bold text-emerald-400">SportCourt</span> &copy; 2026 • Sistem Booking Lapangan Futsal & Badminton
+                    <span class="font-bold text-emerald-400">SportCourt</span> &copy; 2026 • Sistem Booking Lapangan Futsal & Badminton. All rights reserved.
                 </div>
-                <div class="text-slate-400">
-                    UTP PWL Kelompok 3 • Palwa, Dinda, Achira, Faris
+                <div class="text-slate-400 flex items-center gap-3">
+                    <span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Arena Buka: 06:00 - 23:00 WIB</span>
+                    <span class="text-slate-600">•</span>
+                    <span>Layanan Reservasi Resmi</span>
                 </div>
             </div>
         </footer>
