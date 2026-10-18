@@ -44,7 +44,7 @@
 
         <div class="pt-3">
             <x-primary-button class="w-full py-3 text-sm font-bold shadow-lg shadow-emerald-600/25">
-                Daftar Akun Sekarang &rarr;
+                Daftar Akun Sekarang
             </x-primary-button>
         </div>
 

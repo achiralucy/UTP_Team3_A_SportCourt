@@ -230,17 +230,14 @@
                     </div>
                 </div>
 
-                <!-- Modal Gateway Pembayaran Online Sebelum Submit (RESPONSIVE & CLEAN) -->
                 <div x-show="paymentModalOpen"
                      x-cloak
                      class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/70 dark:bg-slate-950/85 backdrop-blur-sm p-4 sm:p-6 flex min-h-screen items-center justify-center">
                     <div @click.away="if (!isProcessingPayment) paymentModalOpen = false"
                          class="bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-700 rounded-3xl max-w-md w-full shadow-2xl relative my-auto overflow-hidden flex flex-col max-h-[92vh] transition-all transform animate-in fade-in zoom-in-95 duration-200">
-                        
-                        <!-- State 1: Normal Payment Flow -->
+
                         <template x-if="!isProcessingPayment && !paymentSuccess">
                             <div class="flex flex-col flex-1 overflow-hidden">
-                                <!-- Modal Header: Pinned at top, never cut off! -->
                                 <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-850 shrink-0">
                                     <div class="flex items-center gap-2.5">
                                         <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-black text-2xs tracking-wider">GATEWAY</span>
