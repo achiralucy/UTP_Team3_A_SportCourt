@@ -158,38 +158,91 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm text-xs space-y-3">
-                    <h4 class="font-bold text-white uppercase tracking-wider text-2xs flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                        </svg>
-                        Pilihan Pembayaran & Check-In
-                    </h4>
+                <div x-data="{ paymentMethod: 'qris' }" class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-sm text-xs space-y-3.5">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-white uppercase tracking-wider text-2xs flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                            </svg>
+                            Pilihan Pembayaran & Check-In
+                        </h4>
+                        <span class="text-3xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-semibold">Resmi</span>
+                    </div>
+
                     <p class="text-slate-300 leading-relaxed text-2xs">
-                        Setelah pengajuan booking diverifikasi oleh tim SportCourt, Anda dapat menyelesaikan transaksi melalui:
+                        Pilih preferensi transaksi Anda. Reservasi online langsung mengunci slot jadwal pertandingan Anda:
                     </p>
-                    <div class="space-y-2 pt-1 text-2xs text-slate-300">
-                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
-                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">QRIS</span>
-                            <div>
-                                <div class="font-semibold text-slate-200 text-xs">QRIS Instan Nasional</div>
-                                <div class="text-3xs text-slate-400">GoPay, OVO, Dana, ShopeePay, BCA, Livin'</div>
+
+                    <div class="space-y-2 pt-1 text-2xs">
+                        <!-- Card 1: QRIS -->
+                        <div @click="paymentMethod = 'qris'"
+                             :class="paymentMethod === 'qris' ? 'border-emerald-500 bg-emerald-500/10 shadow-sm shadow-emerald-950/50' : 'border-slate-750 bg-slate-900/60 hover:border-slate-650'"
+                             class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition select-none">
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">QRIS</span>
+                                <div>
+                                    <div class="font-semibold text-slate-200 text-xs">QRIS Instan Nasional</div>
+                                    <div class="text-3xs text-slate-400">GoPay, OVO, Dana, ShopeePay, BCA, Livin'</div>
+                                </div>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border flex items-center justify-center shrink-0"
+                                 :class="paymentMethod === 'qris' ? 'border-emerald-400 bg-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-800'">
+                                <svg x-show="paymentMethod === 'qris'" class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
-                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">VA</span>
-                            <div>
-                                <div class="font-semibold text-slate-200 text-xs">Transfer Bank / Virtual Account</div>
-                                <div class="text-3xs text-slate-400">BCA, Mandiri, BRI, BNI</div>
+
+                        <!-- Card 2: Transfer Bank -->
+                        <div @click="paymentMethod = 'va'"
+                             :class="paymentMethod === 'va' ? 'border-emerald-500 bg-emerald-500/10 shadow-sm shadow-emerald-950/50' : 'border-slate-750 bg-slate-900/60 hover:border-slate-650'"
+                             class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition select-none">
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">VA</span>
+                                <div>
+                                    <div class="font-semibold text-slate-200 text-xs">Transfer Bank / Virtual Account</div>
+                                    <div class="text-3xs text-slate-400">BCA, Mandiri, BRI, BNI</div>
+                                </div>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border flex items-center justify-center shrink-0"
+                                 :class="paymentMethod === 'va' ? 'border-emerald-400 bg-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-800'">
+                                <svg x-show="paymentMethod === 'va'" class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-750">
-                            <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">CASH</span>
-                            <div>
-                                <div class="font-semibold text-slate-200 text-xs">Bayar di Kasir Venue</div>
-                                <div class="text-3xs text-slate-400">Tunai / EDC Debit saat check-in di arena</div>
+
+                        <!-- Card 3: Bayar Kasir -->
+                        <div @click="paymentMethod = 'cash'"
+                             :class="paymentMethod === 'cash' ? 'border-emerald-500 bg-emerald-500/10 shadow-sm shadow-emerald-950/50' : 'border-slate-750 bg-slate-900/60 hover:border-slate-650'"
+                             class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition select-none">
+                            <div class="flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-lg bg-emerald-500/15 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0">CASH</span>
+                                <div>
+                                    <div class="font-semibold text-slate-200 text-xs">Bayar di Kasir Venue</div>
+                                    <div class="text-3xs text-slate-400">Tunai / EDC Debit saat check-in di arena</div>
+                                </div>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border flex items-center justify-center shrink-0"
+                                 :class="paymentMethod === 'cash' ? 'border-emerald-400 bg-emerald-500 text-slate-950' : 'border-slate-600 bg-slate-800'">
+                                <svg x-show="paymentMethod === 'cash'" class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Note -->
+                    <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-750 text-3xs text-slate-400 space-y-1">
+                        <div class="flex items-center gap-1.5 font-bold text-slate-300">
+                            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Alur Transaksi & Validasi
+                        </div>
+                        <p class="leading-relaxed">
+                            Jadwal Anda langsung terkunci saat reservasi diajukan. Instruksi pembayaran QRIS dinamis dan verifikasi kasir dapat diakses langsung pada halaman <strong class="text-slate-300">E-Tiket</strong> Anda setelah konfirmasi diajukan.
+                        </p>
                     </div>
                 </div>
 
