@@ -8,6 +8,7 @@ use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -170,34 +171,46 @@ class BookingController extends Controller
             return back()->with('error', 'Durasi sewa maksimal adalah 6 jam per pemesanan.')->withInput();
         }
 
-        $conflict = Booking::where('court_id', $validated['court_id'])
-            ->whereDate('booking_date', $validated['booking_date'])
-            ->whereIn('status', ['pending', 'approved'])
-            ->where(function ($query) use ($validated) {
-                $query->where('start_time', '<', $validated['end_time'])
-                      ->where('end_time', '>', $validated['start_time']);
-            })->first();
-
-        if ($conflict) {
-            $conflictStart = substr($conflict->start_time, 0, 5);
-            $conflictEnd = substr($conflict->end_time, 0, 5);
-            $conflictStatus = $conflict->status === 'approved' ? 'Telah Disetujui' : 'Menunggu Konfirmasi';
-            return back()->with('error', "Jadwal Bentrok! Lapangan sudah terisi pada rentang waktu {$conflictStart} - {$conflictEnd} WIB ({$conflictStatus}). Silakan tentukan jam lain.")->withInput();
-        }
         $durationHours = max(1, (int) ceil($start->floatDiffInHours($end)));
         $totalPrice = $durationHours * $court->price_per_hour;
 
-        $booking = Booking::create([
-            'user_id' => $user->id,
-            'court_id' => $court->id,
-            'team_id' => $validated['team_id'] ?? null,
-            'booking_date' => $validated['booking_date'],
-            'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
-            'total_price' => $totalPrice,
-            'status' => 'pending',
-            'admin_notes' => null,
-        ]);
+        $conflictMessage = null;
+
+        $booking = DB::transaction(function () use ($validated, $user, $court, $totalPrice, &$conflictMessage) {
+            $conflict = Booking::where('court_id', $validated['court_id'])
+                ->whereDate('booking_date', $validated['booking_date'])
+                ->whereIn('status', ['pending', 'approved'])
+                ->where(function ($query) use ($validated) {
+                    $query->where('start_time', '<', $validated['end_time'])
+                          ->where('end_time', '>', $validated['start_time']);
+                })
+                ->lockForUpdate()
+                ->first();
+
+            if ($conflict) {
+                $conflictStart = substr($conflict->start_time, 0, 5);
+                $conflictEnd = substr($conflict->end_time, 0, 5);
+                $conflictStatus = $conflict->status === 'approved' ? 'Telah Disetujui' : 'Menunggu Konfirmasi';
+                $conflictMessage = "Jadwal Bentrok! Lapangan sudah terisi pada rentang waktu {$conflictStart} - {$conflictEnd} WIB ({$conflictStatus}). Silakan tentukan jam lain.";
+                return null;
+            }
+
+            return Booking::create([
+                'user_id' => $user->id,
+                'court_id' => $court->id,
+                'team_id' => $validated['team_id'] ?? null,
+                'booking_date' => $validated['booking_date'],
+                'start_time' => $validated['start_time'],
+                'end_time' => $validated['end_time'],
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+                'admin_notes' => null,
+            ]);
+        });
+
+        if (!$booking) {
+            return back()->with('error', $conflictMessage ?? 'Jadwal Bentrok! Lapangan sudah terisi pada rentang waktu tersebut. Silakan tentukan jam lain.')->withInput();
+        }
 
         return redirect()->route('bookings.index')->with('success', "Pembayaran online terverifikasi lunas! Booking #{$booking->id} untuk {$court->name} berhasil dipesan dan sedang menunggu konfirmasi kesiapan lapangan.");
     }
@@ -350,6 +363,12 @@ class BookingController extends Controller
         if (in_array($booking->status, ['cancelled', 'rejected'])) {
             return back()->with('error', 'Booking ini sudah tidak aktif.');
         }
+
+        $request->validate([
+            'reason' => 'nullable|string|max:255',
+        ], [
+            'reason.max' => 'Alasan pembatalan maksimal 255 karakter.',
+        ]);
 
         $bookingDateTime = Carbon::parse($booking->booking_date->toDateString() . ' ' . $booking->start_time);
         if ($bookingDateTime->isPast()) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Court;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminBookingController extends Controller
@@ -78,6 +79,12 @@ class AdminBookingController extends Controller
         $request->validate([
             'admin_notes' => 'nullable|string|max:255',
         ]);
+
+        // Cek apakah jadwal sudah lewat dari waktu saat ini
+        $bookingDateTime = Carbon::parse($booking->booking_date->toDateString() . ' ' . $booking->start_time);
+        if ($bookingDateTime->isPast()) {
+            return back()->with('error', 'Gagal menyetujui: Jadwal pertandingan ini sudah lewat waktu. Silakan tolak booking dan proses pengembalian dana (refund).');
+        }
 
         // Cek kembali apakah ada booking lain yang bertabrakan sebelum disetujui
         $conflict = Booking::where('id', '!=', $booking->id)

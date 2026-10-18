@@ -58,7 +58,7 @@ class TeamController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'captain_name' => 'required|string|max:100',
-            'captain_phone' => 'required|string|max:20',
+            'captain_phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+\-\s()]+$/'],
             'members_count' => 'required|integer|min:2|max:50',
             'description' => 'nullable|string|max:500',
         ], [
@@ -66,6 +66,7 @@ class TeamController extends Controller
             'name.max' => 'Nama tim maksimal 100 karakter.',
             'captain_name.required' => 'Nama kapten tim wajib diisi.',
             'captain_phone.required' => 'Nomor kontak kapten wajib diisi.',
+            'captain_phone.regex' => 'Nomor kontak kapten hanya boleh berisi angka dan karakter telepon yang valid (+, -, spasi).',
             'members_count.required' => 'Jumlah anggota wajib diisi.',
             'members_count.min' => 'Jumlah anggota tim minimal 2 orang.',
             'members_count.max' => 'Jumlah anggota tim maksimal 50 orang.',
@@ -125,13 +126,14 @@ class TeamController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'captain_name' => 'required|string|max:100',
-            'captain_phone' => 'required|string|max:20',
+            'captain_phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+\-\s()]+$/'],
             'members_count' => 'required|integer|min:2|max:50',
             'description' => 'nullable|string|max:500',
         ], [
             'name.required' => 'Nama tim atau komunitas wajib diisi.',
             'captain_name.required' => 'Nama kapten tim wajib diisi.',
             'captain_phone.required' => 'Nomor kontak kapten wajib diisi.',
+            'captain_phone.regex' => 'Nomor kontak kapten hanya boleh berisi angka dan karakter telepon yang valid (+, -, spasi).',
             'members_count.required' => 'Jumlah anggota wajib diisi.',
             'members_count.min' => 'Jumlah anggota tim minimal 2 orang.',
         ]);

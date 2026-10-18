@@ -17,7 +17,7 @@
         </div>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div x-data="{ rejectModalOpen: false, rejectAction: '', rejectBookingTitle: '' }" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <!-- Status Filter Tabs -->
         <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
             <a href="{{ route('admin.bookings.index') }}"
@@ -187,19 +187,19 @@
                                                         ACC Lapangan
                                                     </button>
                                                 </form>
+
+                                                <!-- Tombol Tolak Cepat (Buka Modal) -->
+                                                <button type="button"
+                                                        @click="rejectAction = '{{ route('admin.bookings.reject', $b) }}'; rejectBookingTitle = '#{{ $b->id }} - {{ addslashes($b->user->name) }} ({{ addslashes($b->court->name) }})'; rejectModalOpen = true;"
+                                                        class="px-2.5 py-1 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 rounded-lg text-xs font-semibold transition"
+                                                        title="Tolak Jadwal & Refund">
+                                                    Tolak
+                                                </button>
                                             @endif
 
                                             <a href="{{ route('admin.bookings.show', $b) }}" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-650 text-slate-200 rounded-lg text-xs font-medium transition">
                                                 Detail
                                             </a>
-
-                                            <form method="POST" action="{{ route('admin.bookings.destroy', $b) }}" onsubmit="return confirm('Hapus riwayat booking ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="px-2 py-1 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg text-xs transition" title="Hapus Booking">
-                                                    🗑️
-                                                </button>
-                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -212,6 +212,53 @@
                     {{ $bookings->links() }}
                 </div>
             @endif
+        </div>
+
+        <!-- Modal Penolakan / Refund Cepat Admin -->
+        <div x-show="rejectModalOpen"
+             x-cloak
+             class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div @click.away="rejectModalOpen = false"
+                 class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                        <h3 class="text-sm font-bold text-white">Tolak Booking & Refund Dana</h3>
+                    </div>
+                    <button @click="rejectModalOpen = false" class="text-slate-400 hover:text-white text-lg">&times;</button>
+                </div>
+
+                <form :action="rejectAction" method="POST" class="mt-4 space-y-4">
+                    @csrf
+                    <div>
+                        <div class="text-2xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Pemesanan Yang Ditolak:</div>
+                        <div class="font-mono text-xs text-rose-300 bg-slate-900/80 p-2.5 rounded-xl border border-slate-750 font-bold" x-text="rejectBookingTitle"></div>
+                    </div>
+
+                    <div>
+                        <label for="reject_reason" class="block text-2xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                            Alasan Penolakan / Pengembalian Dana <span class="text-rose-400">*</span>
+                        </label>
+                        <textarea id="reject_reason" name="admin_notes" rows="3" required
+                                  placeholder="Contoh: Lapangan sedang dalam perbaikan darurat / Bentrok acara resmi pemda"
+                                  class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-rose-500 placeholder-slate-500"></textarea>
+                        <p class="text-3xs text-slate-400 mt-1">
+                            Catatan ini akan dikirimkan kepada penyewa dan tertera di e-tiket sebagai bukti penerusan refund online.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2 pt-2">
+                        <button type="button" @click="rejectModalOpen = false"
+                                class="flex-1 py-2 bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-semibold rounded-xl transition">
+                            Batal
+                        </button>
+                        <button type="submit"
+                                class="flex-1 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-rose-600/30 transition">
+                            ✕ Tolak & Refund
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </x-app-layout>

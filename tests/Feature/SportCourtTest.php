@@ -219,4 +219,37 @@ class SportCourtTest extends TestCase
             'admin_notes' => 'Maaf, lapangan sedang disewa pemda.',
         ]);
     }
+
+    public function test_admin_cannot_approve_past_booking(): void
+    {
+        $pastBooking = Booking::create([
+            'user_id' => $this->penyewa->id,
+            'court_id' => $this->court->id,
+            'booking_date' => now()->subDays(2)->toDateString(),
+            'start_time' => '10:00',
+            'end_time' => '12:00',
+            'total_price' => 200000,
+            'status' => 'pending',
+        ]);
+
+        $response = $this->actingAs($this->admin)->post(route('admin.bookings.approve', $pastBooking), [
+            'admin_notes' => 'Coba approve jadwal kemarin',
+        ]);
+
+        $response->assertSessionHas('error');
+        $this->assertEquals('pending', $pastBooking->fresh()->status);
+    }
+
+    public function test_team_captain_phone_must_be_valid_phone_format(): void
+    {
+        $response = $this->actingAs($this->penyewa)->post(route('teams.store'), [
+            'name' => 'Invalid Phone FC',
+            'captain_name' => 'Faris',
+            'captain_phone' => 'bukan-nomor-telepon',
+            'members_count' => 10,
+        ]);
+
+        $response->assertSessionHasErrors('captain_phone');
+        $this->assertDatabaseMissing('teams', ['name' => 'Invalid Phone FC']);
+    }
 }
