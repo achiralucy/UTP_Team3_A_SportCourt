@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6 text-center">
-        <h2 class="text-xl font-bold text-white tracking-tight">Lupa Kata Sandi?</h2>
-        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Lupa Kata Sandi?</h2>
+        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
             Masukkan alamat email yang terdaftar pada akun SportCourt Anda. Kami akan mengirimkan tautan untuk mengatur ulang kata sandi.
         </p>
     </div>
