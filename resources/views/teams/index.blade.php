@@ -42,7 +42,6 @@
             </form>
         </div>
 
-        <!-- Teams Grid / Table -->
         @if ($teams->isEmpty())
             <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-12 text-center">
                 <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto mb-4 border border-indigo-500/20">

@@ -6,13 +6,11 @@
         </p>
     </div>
 
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
         @csrf
 
-        <!-- Email Address -->
         <div>
             <x-input-label for="email" value="Alamat Email Terdaftar" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus placeholder="nama@email.com" />
@@ -27,7 +25,7 @@
 
         <div class="text-center pt-2">
             <a href="{{ route('login') }}" class="text-xs text-slate-300 hover:text-emerald-400 transition min-h-[44px] inline-flex items-center">
-                &larr; Kembali ke Halaman Masuk
+                Kembali ke Halaman Masuk
             </a>
         </div>
     </form>

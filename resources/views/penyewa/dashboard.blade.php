@@ -51,7 +51,6 @@
             </div>
         </div>
 
-        <!-- Highlight: Jadwal Terdekat -->
         @if ($nextBooking)
             <div class="bg-gradient-to-r from-emerald-950/60 to-slate-800/80 border border-emerald-500/30 rounded-2xl p-6 shadow-lg relative overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
@@ -92,7 +91,7 @@
                         Riwayat Booking Terbaru
                     </h3>
                     <a href="{{ route('bookings.index') }}" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300">
-                        Lihat Semua &rarr;
+                        Lihat Semua 
                     </a>
                 </div>
 
@@ -133,7 +132,7 @@
                                     @endif
                                     <div class="mt-1">
                                         <a href="{{ route('bookings.show', $b) }}" class="text-xs text-slate-300 hover:text-emerald-400 font-medium">
-                                            Detail &rarr;
+                                            Detail 
                                         </a>
                                     </div>
                                 </div>
@@ -154,7 +153,7 @@
                             Tim / Komunitas Saya
                         </h3>
                         <a href="{{ route('teams.index') }}" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">
-                            Kelola &rarr;
+                            Kelola 
                         </a>
                     </div>
 
@@ -184,7 +183,7 @@
 
                 <div class="p-4 bg-slate-850 border-t border-slate-700/80 text-center">
                     <a href="{{ route('courts.index') }}" class="text-xs font-semibold text-slate-300 hover:text-emerald-400 inline-flex items-center gap-1">
-                        Eksplorasi Katalog Lapangan SportCourt &rarr;
+                        Eksplorasi Katalog Lapangan SportCourt 
                     </a>
                 </div>
             </div>

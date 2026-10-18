@@ -12,7 +12,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- Header Navigation -->
     <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <a href="{{ url('/') }}" class="flex items-center space-x-3">
@@ -35,7 +34,7 @@
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ route('dashboard') }}" class="min-h-[44px] px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
-                            Masuk ke Dashboard &rarr;
+                            Masuk ke Dashboard
                         </a>
                     @else
                         <a href="{{ route('login') }}" class="min-h-[44px] px-4 py-2.5 text-sm font-medium text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition inline-flex items-center justify-center">
@@ -52,7 +51,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="relative isolate overflow-hidden pt-16 pb-20">
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
@@ -79,7 +77,6 @@
                 </a>
             </div>
 
-            <!-- Quick Venue Highlights Bar -->
             <div class="mt-14 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
                 <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
@@ -132,7 +129,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="py-16 bg-slate-900/60 border-y border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -157,7 +153,6 @@
                     </div>
                 </div>
 
-                <!-- Fitur 2 -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-sm hover:border-teal-500/30 transition flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center mb-4 border border-teal-500/20">
@@ -172,7 +167,6 @@
                     </div>
                 </div>
 
-                <!-- Fitur 3 -->
                 <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 shadow-sm hover:border-indigo-500/30 transition flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 border border-indigo-500/20">
@@ -190,7 +184,6 @@
         </div>
     </section>
 
-    <!-- Katalog Singkat Lapangan -->
     <section class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
@@ -199,7 +192,7 @@
                     <h3 class="text-2xl font-black text-white mt-0.5">Lapangan Siap Pakai Hari Ini</h3>
                 </div>
                 <a href="{{ route('courts.index') }}" class="min-h-[44px] text-xs font-semibold text-emerald-400 hover:text-emerald-300 inline-flex items-center">
-                    Lihat Seluruh Lapangan &rarr;
+                    Lihat Seluruh Lapangan
                 </a>
             </div>
 
@@ -235,7 +228,6 @@
         </div>
     </section>
 
-    <!-- Venue Location & General Amenities -->
     <section class="py-16 bg-slate-900/40 border-t border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -302,7 +294,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="border-t border-slate-900 py-8 bg-slate-950 text-xs text-slate-400">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
             <div>

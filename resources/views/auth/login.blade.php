@@ -4,20 +4,17 @@
         <p class="text-xs text-slate-400 mt-1">Silakan masuk untuk mengelola pemesanan lapangan dan tim Anda.</p>
     </div>
 
-    <!-- Session Status (e.g. Registrasi berhasil) -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
-        <!-- Email Address -->
         <div>
             <x-input-label for="email" value="Alamat Email" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="nama@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs text-rose-400" />
         </div>
 
-        <!-- Password -->
         <div>
             <div class="flex items-center justify-between mb-1.5">
                 <x-input-label for="password" value="Password" />
@@ -47,11 +44,10 @@
 
         <div class="pt-3">
             <x-primary-button class="w-full py-3 text-sm font-bold shadow-lg shadow-emerald-600/30">
-                Masuk Sekarang &rarr;
+                Masuk Sekarang 
             </x-primary-button>
         </div>
 
-        <!-- Register Link -->
         <div class="pt-4 border-t border-slate-800 text-center">
             <p class="text-xs text-slate-400">
                 Belum memiliki akun?

@@ -58,7 +58,6 @@
                 </div>
             </div>
 
-            <!-- Total Booking Disetujui -->
             <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm relative overflow-hidden">
                 <div class="flex items-center justify-between">
                     <div>
@@ -74,7 +73,6 @@
                 </div>
             </div>
 
-            <!-- Total Komunitas / Tim -->
             <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-sm relative overflow-hidden">
                 <div class="flex items-center justify-between">
                     <div>
@@ -91,7 +89,6 @@
             </div>
         </div>
 
-        <!-- Section: Booking Menunggu Persetujuan (Quick Approval) -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-sm overflow-hidden">
             <div class="p-5 border-b border-slate-700/80 flex items-center justify-between">
                 <div>
@@ -102,7 +99,7 @@
                     <p class="text-xs text-slate-400 mt-0.5">Tinjau dan setujui atau tolak permohonan booking lapangan terbaru</p>
                 </div>
                 <a href="{{ route('admin.bookings.index', ['status' => 'pending']) }}" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300">
-                    Lihat Semua Pending &rarr;
+                    Lihat Semua Pending 
                 </a>
             </div>
 
@@ -175,7 +172,6 @@
             @endif
         </div>
 
-        <!-- Section: Jadwal Lapangan Mendatang yang Disetujui -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-sm overflow-hidden">
             <div class="p-5 border-b border-slate-700/80 flex items-center justify-between">
                 <div>
@@ -226,7 +222,7 @@
                                     </td>
                                     <td class="py-3 px-4 text-right">
                                         <a href="{{ route('admin.bookings.show', $ub) }}" class="text-xs text-emerald-400 hover:text-emerald-300 font-medium">
-                                            Lihat &rarr;
+                                            Lihat
                                         </a>
                                     </td>
                                 </tr>

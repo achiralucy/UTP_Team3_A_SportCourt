@@ -46,7 +46,7 @@
         <footer class="py-4 text-center text-2xs text-slate-400 border-t border-slate-900 bg-slate-950">
             <div class="max-w-md mx-auto px-4 flex items-center justify-between">
                 <span>&copy; 2026 SportCourt Arena</span>
-                <a href="/" class="text-emerald-400 hover:text-emerald-300 font-medium transition min-h-[44px] inline-flex items-center">&larr; Kembali ke Beranda</a>
+                <a href="/" class="text-emerald-400 hover:text-emerald-300 font-medium transition min-h-[44px] inline-flex items-center">Kembali ke Beranda</a>
             </div>
         </footer>
     </body>

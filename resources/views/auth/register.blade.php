@@ -7,21 +7,18 @@
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
-        <!-- Name -->
         <div>
             <x-input-label for="name" value="Nama Lengkap" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Contoh: Faris Adithya" />
             <x-input-error :messages="$errors->get('name')" class="mt-2 text-xs text-rose-400" />
         </div>
 
-        <!-- Email Address -->
         <div>
             <x-input-label for="email" value="Alamat Email Aktif" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="nama@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs text-rose-400" />
         </div>
 
-        <!-- Password -->
         <div>
             <x-input-label for="password" value="Password" />
             <x-text-input id="password" class="block mt-1 w-full"
@@ -32,7 +29,6 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2 text-xs text-rose-400" />
         </div>
 
-        <!-- Confirm Password -->
         <div>
             <x-input-label for="password_confirmation" value="Konfirmasi Password" />
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
@@ -44,11 +40,10 @@
 
         <div class="pt-3">
             <x-primary-button class="w-full py-3 text-sm font-bold shadow-lg shadow-emerald-600/30">
-                Daftar Akun Sekarang &rarr;
+                Daftar Akun Sekarang 
             </x-primary-button>
         </div>
 
-        <!-- Login Link -->
         <div class="pt-4 border-t border-slate-800 text-center">
             <p class="text-xs text-slate-400">
                 Sudah memiliki akun terdaftar?

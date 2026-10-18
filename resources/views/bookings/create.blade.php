@@ -10,7 +10,7 @@
                 </p>
             </div>
             <a href="{{ route('bookings.index') }}" class="inline-flex items-center text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 min-h-[44px] bg-slate-800 rounded-xl border border-slate-700 transition">
-                &larr; Riwayat Booking
+                Riwayat Booking
             </a>
         </div>
     </x-slot>
@@ -180,7 +180,6 @@
                     </p>
 
                     <div class="space-y-2 pt-1 text-2xs">
-                        <!-- Card 1: QRIS -->
                         <div @click="paymentMethod = 'qris'"
                              :class="paymentMethod === 'qris' ? 'border-emerald-500 bg-emerald-500/10 shadow-sm shadow-emerald-950/50' : 'border-slate-750 bg-slate-900/60 hover:border-slate-650'"
                              class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition select-none">
@@ -199,7 +198,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2: Transfer Bank / Virtual Account -->
                         <div @click="paymentMethod = 'va'"
                              :class="paymentMethod === 'va' ? 'border-emerald-500 bg-emerald-500/10 shadow-sm shadow-emerald-950/50' : 'border-slate-750 bg-slate-900/60 hover:border-slate-650'"
                              class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition select-none">
@@ -219,7 +217,6 @@
                         </div>
                     </div>
 
-                    <!-- Note -->
                     <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-750 text-3xs text-slate-400 space-y-1">
                         <div class="flex items-center gap-1.5 font-bold text-emerald-400">
                             <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,13 +230,11 @@
                     </div>
                 </div>
 
-                <!-- Modal Gateway Pembayaran Online Sebelum Submit -->
                 <div x-show="paymentModalOpen"
                      x-cloak
                      class="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
                     <div @click.away="if (!isProcessingPayment) paymentModalOpen = false" class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-                        
-                        <!-- State 1: Normal Payment Flow -->
+
                         <template x-if="!isProcessingPayment && !paymentSuccess">
                             <div>
                                 <div class="flex items-center justify-between pb-3 border-b border-slate-700">
@@ -251,7 +246,6 @@
                                 </div>
 
                                 <div class="mt-4 space-y-4">
-                                    <!-- Ringkasan Singkat Pesanan -->
                                     <div class="p-3.5 bg-slate-900 rounded-xl border border-slate-750 text-xs space-y-1.5">
                                         <div class="flex justify-between">
                                             <span class="text-slate-400 text-2xs">Lapangan:</span>
@@ -267,7 +261,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Tab Metode -->
                                     <div class="flex rounded-xl bg-slate-900 p-1 border border-slate-750 text-xs">
                                         <button type="button" @click="paymentMethod = 'qris'"
                                                 :class="paymentMethod === 'qris' ? 'bg-emerald-500 text-slate-950 font-bold shadow' : 'text-slate-400 hover:text-white'"
@@ -281,7 +274,6 @@
                                         </button>
                                     </div>
 
-                                    <!-- Konten QRIS -->
                                     <template x-if="paymentMethod === 'qris'">
                                         <div class="flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-inner border border-slate-200">
                                             <div class="text-2xs font-black tracking-widest text-slate-950 mb-1">QRIS STANDAR NASIONAL</div>
@@ -296,7 +288,6 @@
                                         </div>
                                     </template>
 
-                                    <!-- Konten VA -->
                                     <template x-if="paymentMethod === 'va'">
                                         <div class="space-y-2 p-3 bg-slate-900 rounded-xl border border-slate-750 text-2xs">
                                             <div class="p-2.5 bg-slate-800/80 rounded-lg border border-slate-700 flex justify-between items-center">
@@ -320,7 +311,6 @@
                                         Sisa batas waktu pembayaran: <span class="font-mono text-amber-300 font-bold" x-text="String(timerMin).padStart(2, '0') + ':' + String(timerSec).padStart(2, '0')"></span>
                                     </div>
 
-                                    <!-- Action Buttons -->
                                     <div class="flex items-center gap-3 pt-2">
                                         <button type="button" @click="paymentModalOpen = false" class="flex-1 py-2.5 min-h-[44px] bg-slate-700 hover:bg-slate-650 text-slate-200 text-xs font-semibold rounded-xl transition text-center cursor-pointer">
                                             Batal
@@ -335,7 +325,6 @@
                             </div>
                         </template>
 
-                        <!-- State 2: Processing Payment -->
                         <template x-if="isProcessingPayment">
                             <div class="py-8 text-center space-y-4">
                                 <div class="w-12 h-12 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -346,7 +335,6 @@
                             </div>
                         </template>
 
-                        <!-- State 3: Payment Success -->
                         <template x-if="paymentSuccess">
                             <div class="py-8 text-center space-y-4">
                                 <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto text-2xl font-black">

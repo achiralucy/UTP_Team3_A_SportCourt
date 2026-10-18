@@ -42,20 +42,17 @@
             </a>
         </div>
 
-        <!-- Filter & Search Controls -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 shadow-sm">
             <form method="GET" action="{{ route('admin.bookings.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 @if (request('status'))
                     <input type="hidden" name="status" value="{{ request('status') }}">
                 @endif
 
-                <!-- Search -->
                 <div>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari penyewa, tim, lapangan..."
                            class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
                 </div>
 
-                <!-- Kategori Lapangan -->
                 <div>
                     <select name="category" class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
                         <option value="all">Semua Kategori</option>
@@ -64,13 +61,11 @@
                     </select>
                 </div>
 
-                <!-- Tanggal Booking -->
                 <div>
                     <input type="date" name="date" value="{{ request('date') }}"
                            class="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="flex items-center gap-2">
                     <button type="submit" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold transition">
                         Filter
@@ -82,7 +77,6 @@
             </form>
         </div>
 
-        <!-- Booking Table -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl shadow-sm overflow-hidden">
             @if ($bookings->isEmpty())
                 <div class="p-12 text-center text-slate-400">
@@ -107,7 +101,6 @@
                         <tbody class="divide-y divide-slate-700/60">
                             @foreach ($bookings as $b)
                                 <tr class="hover:bg-slate-750 transition">
-                                    <!-- ID / Pemesan -->
                                     <td class="py-3.5 px-4">
                                         <div class="text-xs font-mono text-emerald-400">#{{ $b->id }}</div>
                                         <div class="font-bold text-white">{{ $b->user->name }}</div>
@@ -121,7 +114,6 @@
                                         </div>
                                     </td>
 
-                                    <!-- Lapangan -->
                                     <td class="py-3.5 px-4">
                                         <div class="font-semibold text-slate-200">{{ $b->court->name }}</div>
                                         <span class="inline-block px-2 py-0.5 text-2xs font-bold rounded uppercase mt-0.5 {{ $b->court->category == 'futsal' ? 'bg-blue-500/20 text-blue-300' : 'bg-emerald-500/20 text-emerald-300' }}">
@@ -129,13 +121,11 @@
                                         </span>
                                     </td>
 
-                                    <!-- Jadwal Main -->
                                     <td class="py-3.5 px-4 text-slate-300">
                                         <div class="font-medium text-white">{{ \Carbon\Carbon::parse($b->booking_date)->translatedFormat('d M Y') }}</div>
                                         <div class="text-xs font-mono text-slate-400">{{ substr($b->start_time, 0, 5) }} - {{ substr($b->end_time, 0, 5) }} WIB</div>
                                     </td>
 
-                                    <!-- Total Biaya & Status Bayar -->
                                     <td class="py-3.5 px-4">
                                         <div class="font-bold text-white">Rp {{ number_format($b->total_price, 0, ',', '.') }}</div>
                                         @if (in_array($b->status, ['pending', 'approved']))
@@ -149,7 +139,6 @@
                                         @endif
                                     </td>
 
-                                    <!-- Status -->
                                     <td class="py-3.5 px-4">
                                         @if ($b->status === 'approved')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -176,7 +165,6 @@
                                         @endif
                                     </td>
 
-                                    <!-- Aksi -->
                                     <td class="py-3.5 px-4 text-right">
                                         <div class="flex items-center justify-end gap-1.5">
                                             @if ($b->status === 'pending')
@@ -188,7 +176,6 @@
                                                     </button>
                                                 </form>
 
-                                                <!-- Tombol Tolak Cepat (Buka Modal) -->
                                                 <button type="button"
                                                         @click="rejectAction = '{{ route('admin.bookings.reject', $b) }}'; rejectBookingTitle = '#{{ $b->id }} - {{ addslashes($b->user->name) }} ({{ addslashes($b->court->name) }})'; rejectModalOpen = true;"
                                                         class="px-2.5 py-1 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 rounded-lg text-xs font-semibold transition"
@@ -214,7 +201,6 @@
             @endif
         </div>
 
-        <!-- Modal Penolakan / Refund Cepat Admin -->
         <div x-show="rejectModalOpen"
              x-cloak
              class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
