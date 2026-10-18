@@ -74,7 +74,7 @@
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ route('dashboard') }}" class="min-h-[44px] px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold shadow-md shadow-emerald-600/30 transition inline-flex items-center justify-center">
-                            Masuk ke Dashboard &rarr;
+                            Masuk ke Dashboard
                         </a>
                     @else
                         <a href="{{ route('login') }}" class="min-h-[44px] px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-700 transition inline-flex items-center justify-center">
@@ -118,7 +118,6 @@
                 </a>
             </div>
 
-            <!-- Quick Venue Highlights Bar (4 Clean Cards) -->
             <div class="mt-14 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
                 <div class="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm transition-colors">
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
@@ -171,7 +170,6 @@
         </div>
     </section>
 
-    <!-- Features Section (3 Clean Columns) -->
     <section class="py-16 bg-slate-100/60 dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800/80 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -181,7 +179,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Fitur 1 -->
+
                 <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-2xl p-6 shadow-sm hover:border-emerald-500/40 transition flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/20">
@@ -196,7 +194,6 @@
                     </div>
                 </div>
 
-                <!-- Fitur 2 -->
                 <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-2xl p-6 shadow-sm hover:border-teal-500/40 transition flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4 border border-teal-500/20">
@@ -211,7 +208,6 @@
                     </div>
                 </div>
 
-                <!-- Fitur 3 -->
                 <div class="bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-2xl p-6 shadow-sm hover:border-indigo-500/40 transition flex flex-col justify-between">
                     <div>
                         <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 border border-indigo-500/20">
@@ -229,7 +225,6 @@
         </div>
     </section>
 
-    <!-- Katalog Singkat Lapangan -->
     <section class="py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
@@ -238,7 +233,7 @@
                     <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-0.5">Lapangan Siap Pakai Hari Ini</h3>
                 </div>
                 <a href="{{ route('courts.index') }}" class="min-h-[44px] text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center">
-                    Lihat Seluruh Lapangan &rarr;
+                    Lihat Seluruh Lapangan
                 </a>
             </div>
 
@@ -274,7 +269,6 @@
         </div>
     </section>
 
-    <!-- Venue Location & General Amenities -->
     <section class="py-16 bg-slate-100/40 dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-800/80 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

@@ -10,7 +10,7 @@
                 </p>
             </div>
             <a href="{{ route('teams.index') }}" class="text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-3 py-2 min-h-[44px] inline-flex items-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-700 transition">
-                &larr; Kembali
+                Kembali
             </a>
         </div>
     </x-slot>
@@ -20,7 +20,6 @@
             <form method="POST" action="{{ route('teams.store') }}" class="space-y-5">
                 @csrf
 
-                <!-- Nama Tim -->
                 <div>
                     <label for="name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                         Nama Tim / Klub / Komunitas <span class="text-rose-500">*</span>
@@ -34,7 +33,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Nama Kapten -->
                     <div>
                         <label for="captain_name" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                             Nama Kapten / Penanggung Jawab <span class="text-rose-500">*</span>
@@ -47,7 +45,6 @@
                         @enderror
                     </div>
 
-                    <!-- Kontak / WA Kapten -->
                     <div>
                         <label for="captain_phone" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                             No. WhatsApp Kapten <span class="text-rose-500">*</span>
@@ -61,7 +58,6 @@
                     </div>
                 </div>
 
-                <!-- Jumlah Anggota -->
                 <div>
                     <label for="members_count" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                         Estimasi Jumlah Anggota / Pemain <span class="text-rose-500">*</span>
@@ -74,7 +70,6 @@
                     @enderror
                 </div>
 
-                <!-- Deskripsi / Asal Komunitas -->
                 <div>
                     <label for="description" class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                         Deskripsi / Catatan Komunitas

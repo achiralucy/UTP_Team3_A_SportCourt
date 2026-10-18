@@ -7,21 +7,18 @@
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
-        <!-- Name -->
         <div>
             <x-input-label for="name" value="Nama Lengkap" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Contoh: Faris Adithya" />
             <x-input-error :messages="$errors->get('name')" class="mt-2 text-xs text-rose-500" />
         </div>
 
-        <!-- Email Address -->
         <div>
             <x-input-label for="email" value="Alamat Email Aktif" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="nama@email.com" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-xs text-rose-500" />
         </div>
 
-        <!-- Password -->
         <div>
             <x-input-label for="password" value="Password" />
             <x-text-input id="password" class="block mt-1 w-full"
@@ -31,8 +28,6 @@
                             placeholder="Minimal 8 karakter" />
             <x-input-error :messages="$errors->get('password')" class="mt-2 text-xs text-rose-500" />
         </div>
-
-        <!-- Confirm Password -->
         <div>
             <x-input-label for="password_confirmation" value="Konfirmasi Password" />
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
@@ -48,7 +43,6 @@
             </x-primary-button>
         </div>
 
-        <!-- Login Link -->
         <div class="pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
             <p class="text-xs text-slate-600 dark:text-slate-400">
                 Sudah memiliki akun terdaftar?

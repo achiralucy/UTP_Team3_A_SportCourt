@@ -7,11 +7,9 @@
 
         <title>{{ config('app.name', 'SportCourt') }} - Booking Lapangan Futsal & Badminton</title>
 
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
-        <!-- Theme Initialization (Prevent FOUC) -->
         <script>
             if (localStorage.theme === 'light') {
                 document.documentElement.classList.remove('dark');
@@ -22,14 +20,12 @@
             }
         </script>
 
-        <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
         <div class="flex-grow">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -38,7 +34,6 @@
                 </header>
             @endisset
 
-            <!-- Flash Messages -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
                 @if (session('success'))
                     <div class="mb-4 flex items-center p-4 text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-500/30 rounded-xl shadow-sm" role="alert">
@@ -81,7 +76,6 @@
                 @endif
             </div>
 
-            <!-- Page Content -->
             <main class="py-6">
                 {{ $slot }}
             </main>
