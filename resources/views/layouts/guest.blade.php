@@ -45,7 +45,7 @@
         <!-- Top Navigation / Theme Switcher -->
         <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             <a href="/" class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center gap-1.5 min-h-[44px]">
-                &larr; <span>Beranda SportCourt</span>
+                <span>Beranda SportCourt</span>
             </a>
             <button type="button"
                     @click="toggleTheme()"
@@ -91,7 +91,7 @@
         <footer class="py-4 text-center text-2xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 transition-colors">
             <div class="max-w-md mx-auto px-4 flex items-center justify-between">
                 <span>&copy; 2026 SportCourt Arena</span>
-                <a href="/" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium transition min-h-[44px] inline-flex items-center">&larr; Kembali ke Beranda</a>
+                <a href="/" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium transition min-h-[44px] inline-flex items-center">Kembali ke Beranda</a>
             </div>
         </footer>
     </body>

@@ -18,9 +18,8 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <!-- Main Card Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Left 2 Cols: Details -->
+
             <div class="lg:col-span-2 space-y-6">
-                <!-- Status & Booking Summary -->
                 <div class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-6 shadow-sm transition-colors">
                     <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-700">
                         <div>

@@ -226,7 +226,7 @@
                                     </td>
                                     <td class="py-3 px-4 text-right">
                                         <a href="{{ route('admin.bookings.show', $ub) }}" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-semibold">
-                                            Lihat &rarr;
+                                            Lihat 
                                         </a>
                                     </td>
                                 </tr>

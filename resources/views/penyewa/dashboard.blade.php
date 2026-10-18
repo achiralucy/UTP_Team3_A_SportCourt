@@ -184,7 +184,7 @@
 
                 <div class="p-4 bg-slate-50 dark:bg-slate-850 border-t border-slate-100 dark:border-slate-700/80 text-center transition-colors">
                     <a href="{{ route('courts.index') }}" class="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 inline-flex items-center gap-1">
-                        Eksplorasi Katalog Lapangan SportCourt &rarr;
+                        Eksplorasi Katalog Lapangan SportCourt 
                     </a>
                 </div>
             </div>
