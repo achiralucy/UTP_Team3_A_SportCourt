@@ -28,6 +28,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            $intended = session()->get('url.intended');
+            if ($intended && !str_contains($intended, '/admin')) {
+                session()->forget('url.intended');
+            }
+        } elseif ($user->isPenyewa()) {
+            $intended = session()->get('url.intended');
+            if ($intended && str_contains($intended, '/admin')) {
+                session()->forget('url.intended');
+            }
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

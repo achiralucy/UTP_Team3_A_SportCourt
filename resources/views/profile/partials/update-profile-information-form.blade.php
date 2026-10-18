@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-base font-bold text-white">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white">
             Informasi Profil
         </h2>
 
-        <p class="mt-1 text-xs text-slate-400">
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
             Perbarui informasi nama dan alamat email aktif akun Anda.
         </p>
     </header>
@@ -30,16 +30,16 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
-                    <p class="text-xs mt-2 text-slate-300">
+                    <p class="text-xs mt-2 text-slate-600 dark:text-slate-300">
                         Alamat email Anda belum diverifikasi.
 
-                        <button form="send-verification" class="underline text-xs text-emerald-400 hover:text-emerald-300 focus:outline-none">
+                        <button form="send-verification" class="underline text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 focus:outline-none">
                             Klik di sini untuk mengirim ulang email verifikasi.
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-xs text-emerald-400">
+                        <p class="mt-2 font-medium text-xs text-emerald-600 dark:text-emerald-400">
                             Tautan verifikasi baru telah dikirim ke alamat email Anda.
                         </p>
                     @endif
@@ -56,7 +56,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2500)"
-                    class="text-xs font-semibold text-emerald-400"
+                    class="text-xs font-semibold text-emerald-600 dark:text-emerald-400"
                 >✓ Perubahan berhasil disimpan.</p>
             @endif
         </div>

@@ -16,6 +16,11 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.bookings.index');
+        }
+
         $query = Booking::where('user_id', $user->id)->with(['court', 'team']);
 
         if ($request->filled('status') && $request->status !== 'all') {
@@ -100,6 +105,11 @@ class BookingController extends Controller
     public function create(Request $request)
     {
         $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard')->with('error', 'Akun Administrator tidak dapat melakukan pemesanan lapangan. Silakan gunakan akun Penyewa.');
+        }
+
         $courts = Court::where('status', 'available')->get();
         $teams = Team::where('user_id', $user->id)->get();
         $selectedCourtId = $request->query('court_id');
@@ -111,6 +121,10 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard')->with('error', 'Akun Administrator tidak diizinkan melakukan pemesanan lapangan. Silakan gunakan akun Penyewa.');
+        }
 
         $maxFutureDate = now()->addDays(30)->toDateString();
 
@@ -239,7 +253,11 @@ class BookingController extends Controller
     {
         $user = Auth::user();
 
-        if ($booking->user_id !== $user->id && !$user->isAdmin()) {
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.bookings.show', $booking);
+        }
+
+        if ($booking->user_id !== $user->id) {
             abort(403);
         }
 
@@ -257,7 +275,11 @@ class BookingController extends Controller
     {
         $user = Auth::user();
 
-        if ($booking->user_id !== $user->id && !$user->isAdmin()) {
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.bookings.show', $booking);
+        }
+
+        if ($booking->user_id !== $user->id) {
             abort(403);
         }
 
@@ -356,7 +378,11 @@ class BookingController extends Controller
     {
         $user = Auth::user();
 
-        if ($booking->user_id !== $user->id && !$user->isAdmin()) {
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.bookings.show', $booking);
+        }
+
+        if ($booking->user_id !== $user->id) {
             abort(403);
         }
 

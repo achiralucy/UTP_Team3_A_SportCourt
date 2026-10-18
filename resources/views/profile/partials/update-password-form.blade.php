@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-base font-bold text-white">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white">
             Perbarui Kata Sandi
         </h2>
 
-        <p class="mt-1 text-xs text-slate-400">
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
             Pastikan akun Anda menggunakan kata sandi yang aman dan tidak mudah ditebak.
         </p>
     </header>
@@ -40,7 +40,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2500)"
-                    class="text-xs font-semibold text-emerald-400"
+                    class="text-xs font-semibold text-emerald-600 dark:text-emerald-400"
                 >✓ Kata sandi berhasil diperbarui.</p>
             @endif
         </div>

@@ -1,10 +1,10 @@
 <section class="space-y-6">
     <header>
-        <h2 class="text-base font-bold text-rose-400">
+        <h2 class="text-base font-bold text-rose-600 dark:text-rose-400">
             Hapus Akun Pengguna
         </h2>
 
-        <p class="mt-1 text-xs text-slate-400">
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">
             Setelah akun Anda dihapus, seluruh data profil, tim, dan riwayat reservasi Anda akan dihapus secara permanen. Sebelum menghapus akun, pastikan Anda telah menyelesaikan seluruh kewajiban atau menyimpan informasi yang diperlukan.
         </p>
     </header>
@@ -15,15 +15,15 @@
     >Hapus Akun Saya</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-slate-800 text-slate-100">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 transition-colors">
             @csrf
             @method('delete')
 
-            <h2 class="text-base font-bold text-white">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">
                 Apakah Anda yakin ingin menghapus akun Anda?
             </h2>
 
-            <p class="mt-2 text-xs text-slate-400 leading-relaxed">
+            <p class="mt-2 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Tindakan ini permanen. Silakan masukkan kata sandi akun Anda untuk mengonfirmasi bahwa Anda benar-benar ingin menghapus akun ini.
             </p>
 
